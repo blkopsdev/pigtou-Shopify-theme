@@ -1,7 +1,19 @@
 {% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
 <span class="variant-sku">{{ product.variants.first.sku }}</span>
 <form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="product_form{% if product.variants.size > 1 or product.options.size > 1 %} with_variants{% endif %}" id="AddToCartForm" data-product="{{ product | json | escape }}">
-  
+
+      {% for product_option in product.options_with_values %}
+        {% if product_option.name == "Design" %}
+          {% assign variant_position = product_option.position | minus: 1 %}
+        {% endif %}
+       
+      {% endfor %}
+    
+  <style>
+    label[for="product-select-{{product.id}}-option-{{variant_position}}"], #product-select-{{product.id}}-option-{{variant_position}} {
+      display: none !important;
+    }
+  </style>
   {% if product.options.size > 1 %}
   <div class="select">
     <select class="OrignalSelct" id="product-select-{{ product.id }}" name='id[]'>
