@@ -1,0 +1,19 @@
+<!-- Snapchat CustomerEmail data layer -->  
+<script type="text/javascript">
+
+	window.dataLayer = [];
+	document.addEventListener("DOMContentLoaded", function(event) {
+	{% if customer %}
+		window.dataLayer.push({
+		VisitorType: "Logged In",
+		CustomerId: "{{ customer.id }}",
+		CustomerEmail: "{{ customer.email }}",
+		});
+	{% else %}
+		window.dataLayer.push({
+			VisitorType: "Guest"
+		});
+	{% endif %}
+	});
+</script>
+<!-- END Snapchat CustomerEmail data layer -->

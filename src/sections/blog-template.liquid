@@ -1,0 +1,93 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div data-section-id="{{ section.id }}" class="blog-template">
+
+  {% if section.settings.image != blank %}
+  {%- assign image_size = '1920x' -%}
+  {%- assign img_url = section.settings.image | img_url: image_size -%}
+  <div class="collection-banner">
+    <img class="lazyload" data-src="{{ img_url }}">
+  </div>
+  {% endif %}  
+
+  <div id="content" class="row">	
+    {% if settings.breadcrumb %}
+    {% include 'breadcrumb' %}	
+    {% endif %}	
+
+    <h1 class="desktop-12 mobile-3">{% if current_tags %}{% comment %}ly_code_replace_for_[ blog.title | link_to: blog.url ]_begin{% endcomment %}{% include 'ly-title' with blog %}{{ ly_translation | link_to: blog.url }}{% comment %}ly_code_replace_end{% endcomment %} » {{ current_tags.first }}{% else %}{% comment %}ly_code_replace_for_[ blog.title ]_begin{% endcomment %}{% include 'ly-title' with blog %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}{% endif %}</h1>
+    {% paginate blog.articles by 50 %}
+
+    {% if section.settings.text != blank %}
+    <div class="desktop-12 tablet-6 mobile-3">
+    {{ section.settings.text }}
+    </div>
+    {% endif %}
+
+    <div id="article-loop" class="desktop-9 tablet-6 mobile-3"> 
+      {% for article in blog.articles  %}
+      {% assign number_of_comments = article.comments_count %}
+      {% if comment and comment.created_at %}
+      {% assign number_of_comments = article.comments_count | plus: 1 %}
+      {% endif %} 
+      <div class="article-index" id="article-{{ article.id }}" data-alpha="{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">   
+        {% include 'article-loop' %}
+      </div>
+      {% endfor %}
+    </div> 
+    <div id="blog-sidebar" class="desktop-3 tablet-hide mobile-3">
+      <h2>{% comment %}ly_i18n_replace_for_[ 'blogs.sidebar.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.sidebar.title' | t }}{% endcapture %}{% include 'ly-static-string' with '9405303' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h2>
+
+      <ul id="posts">
+        {% for article in blog.articles limit: 5  %}
+        <li><a href="{{article.url}}"><h4>{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h4></a>
+         {% if section.settings.show-date %}<p>{{ article.published_at | date: "%b %d %Y" }}</p>{% endif %}
+          <p>{% comment %}ly_code_replace_for_[ article.content | strip_html | truncate: 140 ]_begin{% endcomment %}{% include 'ly-content' with article %}{{ ly_translation | strip_html | truncate: 140 }}{% comment %}ly_code_replace_end{% endcomment %}</p>
+        </li>
+        {% endfor %} 
+        {% if blog.tags > 0 %}
+        <h3 style="margin: 20px 0">{% comment %}ly_i18n_replace_for_[ 'blogs.sidebar.categories' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.sidebar.categories' | t }}{% endcapture %}{% include 'ly-static-string' with '9405304' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h3>
+        {% for tag in blog.all_tags %}
+        <li class="tags">
+          <a href="{{ shop.url}}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+        </li>
+        {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+
+
+    <div class="clear"></div>
+
+    {% include 'pagination' %}
+
+    {% endpaginate %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+"name": "Blog",
+"settings": 
+	[
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+    {
+        "id": "text",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Add some descriptive text to your Blog page.</p>"
+     },
+      {
+        "type": "checkbox",
+        "id": "show-date",
+        "label": "Show published date",
+        "default": true
+      }
+    ]
+}
+{% endschema %}

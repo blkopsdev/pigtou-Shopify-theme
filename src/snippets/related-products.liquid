@@ -1,0 +1,96 @@
+
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<!-- Solution brought to you by Caroline Schnapp -->
+<!-- See this: http://wiki.shopify.com/Related_Products -->
+
+{% assign image_size = 'large' %}
+
+{% capture number_of_related_products_to_fetch %}{{ number_of_related_products_to_show | plus: 1 }}{% endcapture %}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+{% assign found_a_collection = false %}
+{% for c in product.collections %}
+{% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+{% assign found_a_collection = true %}
+{% assign collection = c %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if collection %}
+<h4 style="text-align: center;">{% comment %}ly_i18n_replace_for_[ 'products.general.related' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.related' | t }}{% endcapture %}{% include 'ly-static-string' with '9405472' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h4>
+
+  {% assign current_product_found = false %}
+  {% for tg in product.tags %}
+
+  {% if tg contains 'Design_' %}
+
+  {% assign reltg = tg %}
+  {% endif %}
+  {% endfor %}
+<ul class="related-products">
+  {% for prod in collections['all'].products  %}
+   
+  {% if prod.title == product.title %}
+  {% assign current_product_found = true %}
+     
+  {% else %}
+  {% unless current_product_found == false and forloop.last %}
+  
+  {% if prod.tags contains reltg %}
+
+  <li{% if section.settings.related-products == 'bottom' %} class=""{% endif %}>
+    <div class="image">
+      <a href="{{ prod.url | within: collection }}" title="{% comment %}ly_code_replace_for_[ prod.title | escape ]_begin{% endcomment %}{% include 'ly-title' with prod %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+        {{ prod.featured_image | product_img_url: image_size | img_tag }}
+      </a>
+      
+</div>
+    <div class="title"><a href="{{ prod.url | within: collection }}"> {{ proitem.title | truncate: 40 }} </a>  </div>
+     <div class="price"> {{ prod.price | money }} </div>
+  </li>
+  {% endif %}
+  {% endunless %}
+  {% endif %}
+  {% endfor %}
+</ul>
+{% endif %}
+
+<script>
+  $.get("https://pigtou.com/collections/all/{{reltg}}?view=tag-ajax", function(data, status){
+     
+   
+  $('.related-products').html(data); 
+$('.related-products .{{product.handle}}').remove();        
+        
+$('.related-products').slick({
+  slidesToShow: 6,
+  slidesToScroll: 6,
+  autoplay: true,
+  autoplaySpeed: 2000,
+   dots: true,
+  responsive: [
+    {
+      breakpoint: 1025,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        dots: true
+      }
+    },
+  ]
+}); 
+     
+   });
+
+		
+</script>

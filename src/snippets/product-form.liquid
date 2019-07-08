@@ -1,0 +1,156 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<span class="variant-sku">{{ product.variants.first.sku }}</span>
+<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="product_form{% if product.variants.size > 1 or product.options.size > 1 %} with_variants{% endif %}" id="AddToCartForm" data-product="{{ product | json | escape }}">
+  
+  {% if product.options.size > 1 %}
+  <div class="select">
+    <select class="OrignalSelct" id="product-select-{{ product.id }}" name='id[]'>
+      {% for variant in product.variants %}
+      
+      {% if variant.available %} <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" data-nprice="{{variant.price}}" data-price="{{ variant.price | money }}" value="{{ variant.id }}">{% comment %}ly_code_replace_for_[ variant.title ]_begin{% endcomment %}{% include 'ly-title' with variant %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} - {{ variant.price | money }}</option>{% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  {% elsif product.options.size == 1 and product.variants.size > 1 %}
+  <div class="select">
+    <label>{{ product.options[0] }}</label>
+    <select class="OrignalSelct" id="product-select-{{ product.id }}" name='id[]'>
+      {% for variant in product.variants %}
+      
+      {% if variant.available %} 
+        <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" data-nprice="{{variant.price}}" data-price="{{ variant.price | money }}" value="{{ variant.id }}">{% comment %}ly_code_replace_for_[ variant.title ]_begin{% endcomment %}{% include 'ly-title' with variant %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} - {{ variant.price | money }}</option> 
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  {% else %}
+  <div class="what-is-it">
+    {% if product.options.first != 'Title' %}
+    <label>{{ product.options.first }}:</label>{% for variant in product.variants %}{% if variant.available %}<span class="it-is">{% comment %}ly_code_replace_for_[ variant.option1 | escape ]_begin{% endcomment %}{% include 'ly-option1' with variant %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}</span>{% endif %}{% endfor %}
+    {% endif %}
+  </div>
+  <div class="product-variants"></div><!-- product variants -->  
+  <input  type="hidden" id="{{ variant.id }}" name="id[]" data-sku="{{ variant.sku }}" value="{{ product.variants[0].id }}" />    
+  {% endif %}
+  {% for  tag in product.tags %}
+
+  {% if tag contains 'upsell_collection-' %}
+  {% assign upsee = tag | split: 'upsell_collection-' %}
+  {% assign upsellcol = upsee[1] %}
+  {% assign upsellcolddd = 'upsell-macbook-skins' %}
+  {% endif %}
+  {% endfor %}
+  <div class="DevR_section">
+    {% if collections[upsellcol].products.size > 0 %} 
+    <h3 class="text-center acc-tit"> <ly-as-10142436>Add an accessory</ly-as-10142436> </h3>
+    <!--	<div class="tabarnapp_upsell" data-id="ypn6J67vM4r9XH7hW"></div>-->
+    {% assign cntt = 0 %}
+    {% for proitem in collections[upsellcol].products %}
+    {% if proitem.variants.size > 1 %} 
+    {% assign cntt = cntt | plus: 1 %}
+    {% endif %} 
+    {% endfor %}
+    <div class="slider23 DevR_slide desktop-strap-slider"> 
+      {% for proitem in collections[upsellcol].products %}
+      {% if proitem.handle !=  product.handle and proitem.available %}
+
+
+      <div class="strapbox strap-upsell js-add-upsell-item ">
+        <div class="strap-upsell__image-wrapper">
+          <a href="{{proitem.url}}" target="_blank"> 
+						{% comment %} {%- assign load_img_src = proitem.featured_image | product_img_url: '10x', format: 'pjpg' -%}
+						{%- assign load_img_class = 'strap-upsell__image rte1' -%}
+						<img
+						{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+						alt="<ly-as-10142441>Sandstone Leather</ly-as-10142441>" 
+						data-img="{{ proitem.featured_image | product_img_url: 'medium' }}"
+						/> {% endcomment %}
+					<img class="strap-upsell__image rte1 lazyload" data-src="{{ proitem.featured_image | product_img_url: '215x' }}" alt="<ly-as-10142441>Sandstone Leather</ly-as-10142441>" data-img="{{ proitem.featured_image | product_img_url: '200x' }}"> 
+					</a>
+        </div>
+
+
+        {% assign min = proitem.selected_or_first_available_variant.price %}
+        {% assign max = 0 %}
+        <div class="vrprice" style="display:none">
+          {% for variant1 in proitem.variants %}                
+          {{ variant1.price | money }}          
+          {% if variant1.available %}
+          {% if variant1.price < min %}
+          {% assign min = variant1.price %}
+          {% endif %}
+          {% if variant1.price > max %}
+          {% assign max = variant1.price %}
+          {% endif %}
+          {% endif %} 
+          {% endfor %}
+        </div>
+        <p class="strap-upsell__price">+
+          {% if min == max %}
+          {{min | money }}
+          {% else %}
+          {{min | money }} - {{max | money }}
+          {% endif %} 
+        </p>
+        <p class="strap-upsell__status"><ly-as-10142437>Added!</ly-as-10142437></p>
+        <p class="strap-upsell__description {% if proitem.variants.size == 1 and cntt > 0 %} notOption {% endif %}">						
+          <a href="{{proitem.url}}" target="_blank">	{{ proitem.title | truncate: 73  | lstrip  }} </a>
+        </p>
+
+        {% if proitem.variants.size > 1 %}
+
+        <select id="product-select-upsale" class="product-select-upsale" >
+          <option data-nprice="{{ proitem.selected_or_first_available_variant.price }}" data-price="{{ proitem.selected_or_first_available_variant.price | money }}" value="{{proitem.selected_or_first_available_variant.id}}"><ly-as-10142438>--select--</ly-as-10142438></option>
+          {% for variant2 in proitem.variants %}
+          {% if variant2.available %}
+
+          <option {% if variant2 == product.selected_or_first_available_variant %}selected="selected" {% endif %} data-sku="{{ variant2.sku }}" data-nprice="{{ variant2.price }}" data-price="{{ variant2.price | money }}"   value="{{ variant2.id }}">{% comment %}ly_code_replace_for_[ variant2.title ]_begin{% endcomment %}{% include 'ly-title' with variant2 %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} - {{ variant2.price | money }}</option>{% endif %}
+
+          {% endfor %}
+        </select>
+        {% else %}
+        <input type="hidden" class="product-select-upsale" data-nprice="{{ proitem.selected_or_first_available_variant.price }}" data-price="{{ proitem.selected_or_first_available_variant.price | money }}" value="{{proitem.selected_or_first_available_variant.id}}">
+        {% endif %}
+
+        <span class="strap-checkbox">
+
+          <input type="checkbox" class="chkcls" value="{{ proitem.selected_or_first_available_variant.id}}" data-title="{{ proitem.title }}" data-price="{{ proitem.price }}" tabindex="0">
+        </span> 
+
+      </div>
+      {% endif %}
+      {% endfor %}
+<!--     </div>   -->
+  </div>
+  <div class="clear"></div>
+
+  {% endif %}
+  {% if product.available %}  
+  <div id="product-add">
+    {% comment %}
+    {% if section.settings.show-quantity %}
+    <input min="1" type="number" id="quantity" name="quantity" value="1" />
+    {% endif %}
+    {% endcomment %}
+    <button name="button" class="add money" id="AddToCart" value="{% comment %}ly_i18n_replace_for_[ 'products.product.add_to_cart' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.add_to_cart' | t }}{% endcapture %}{% include 'ly-static-string' with '9405448' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">
+      {% if product.selected_or_first_available_variant.available %} 	 <ly-as-10142439>Add to Cart for</ly-as-10142439> {{product.selected_or_first_available_variant.price | money}} {% else %} <ly-as-10142440>Unavailable</ly-as-10142440> {% endif %}
+    </button>
+  </div>
+  <p class="add-to-cart-msg"></p>
+  {% endif %}
+  <div class="clear"></div>
+</form>
+
+
+
+
+<div id="cbb-frequently-bought-box"></div> 
+
+{% if product.variants.size > 1 or product.options.size > 1 %}
+
+<script type="application/json" id="ProductJson-{{ product.id }}">
+    {{ product | json }}
+</script>
+
+{% endif %}
+

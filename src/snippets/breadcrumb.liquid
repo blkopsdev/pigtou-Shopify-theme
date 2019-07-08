@@ -1,0 +1,41 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+  <div id="breadcrumb" class="desktop-12 mobile-hide">
+    <a href="/" class="homepage-link" title="{% comment %}ly_i18n_replace_for_[ 'general.breadcrumbs.home' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.breadcrumbs.home' | t }}{% endcapture %}{% include 'ly-static-string' with '9405388' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">{% comment %}ly_i18n_replace_for_[ 'general.breadcrumbs.home' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.breadcrumbs.home' | t }}{% endcapture %}{% include 'ly-static-string' with '9405388' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+    {% if template contains "product" %}
+    {% if collection %}            
+    <span class="separator"> / </span> 
+    {% if collection.handle %}
+    {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+    {% comment %}ly_code_replace_for_[ collection.title | link_to: url ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation | link_to: url }}{% comment %}ly_code_replace_end{% endcomment %}
+    {% elsif collection.all_products_count > 0 and collection.products.first.type == collection.title %}
+    {{ collection.title | link_to_type }}
+    {% elsif collection.all_products_count > 0 and collection.products.first.vendor == collection.title %}
+    {{ collection.title | link_to_vendor }}
+    {% endif %}
+    {% else %}
+    <span class="separator"> / </span> 
+    {{ product.type | link_to_type }}
+    {% endif %}
+    <span class="separator"> / </span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% elsif template == "article" %}
+    <span class="separator"> / </span> 
+    {% comment %}ly_code_replace_for_[ blog.title | link_to: blog.url ]_begin{% endcomment %}{% include 'ly-title' with blog %}{{ ly_translation | link_to: blog.url }}{% comment %}ly_code_replace_end{% endcomment %}
+    <span class="separator"> / </span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% elsif template contains "collection" %}
+    {% if current_tags.size > 0 %}
+    <span class="separator"> / </span>
+    {% comment %}ly_code_replace_for_[ collection.title | link_to: collection.url ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation | link_to: collection.url }}{% comment %}ly_code_replace_end{% endcomment %}
+    <span class="separator"> / </span>
+    <span class="page-title">{{ current_tags.first }}</span>
+    {% else %}
+    <span class="separator"> / </span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% endif %}
+    {% else %}
+    <span class="separator"> / </span>
+    <span class="page-title">{{ langify_title }}</span>
+    {% endif %}
+  </div>
+<div class="clear"></div>

@@ -1,0 +1,30 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+{% for item in cart.items %}
+<div class="quick-cart-item">
+  <div class="desktop-2 centered">
+    <a href="{{ item.url }}" title="{% comment %}ly_code_replace_for_[ item.product.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item.product %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+      <img class="lazyload" data-src="{{ item | img_url: 'small' }}"  alt="{% comment %}ly_code_replace_for_[ item.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}" />        
+    </a>
+  </div>
+  <div class="desktop-4 centered l-align">
+    <a href="{{ item.url }}">{% comment %}ly_code_replace_for_[ item.product.title ]_begin{% endcomment %}{% include 'ly-title' with item.product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+  </div>
+    <div class="desktop-2 centered">
+      {{ item.price | money }} 
+    </div>
+  
+    <div class="desktop-2 centered">
+      {{ item.quantity }} 
+    </div>   
+  
+    <div class="desktop-2 centered">
+      {{ item.line_price | money }}
+    </div>  
+  
+    <div class="desktop-1 centered">
+      <a class="remove_item" href="#" data-id="{{ item.variant.id }}"><i class="fa fa-times"></i></a>
+    </div>
+</div>
+<div class="clear"></div>
+{% endfor %}
+

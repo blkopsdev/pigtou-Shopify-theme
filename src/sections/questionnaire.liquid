@@ -1,0 +1,317 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div  class="shopify-section index-section questionnaire contrast-bg-2">
+  <div  data-section-type="questionnaire-section">
+  <div class="page-width">
+    <div class="list-block">
+
+      <div class="js-questionnaire">
+
+        <div class="list-block__slide" id="questionnaire-home">
+          <div class="list-block__row">
+
+            <div class="section-header text-center">
+				  <h3 class="h1 questionnaire-heading"><ly-as-9405341>Select your device.</ly-as-9405341></h3>
+			</div>
+            {% for block in section.blocks %}
+            <div class="list-block__col one-whole medium-up--one-third">
+              <div class="list-block__card js-questionnaire-select" data-questionnaire="questionnaire-result-{{ block.settings.title }}">
+                <div class="list-block__card-inner list-block__card-inner--sm-row no-hover">
+                  <div class="list-block__card-item list-block__card-image">
+                    <img class="lazyload" data-src="{{ block.settings.image | img_url:'350x' }}" alt="">
+                  </div>
+                  <div class="list-block__card-item list-block__card-content">
+
+                    <h3 class="list-block__title font-base">{{ block.settings.title }}</h3>
+
+
+
+                    <p class="list-block__text-lead lead">{{ block.settings.sub_title }}</p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+ 		{% endfor %}
+          </div>
+        </div>
+
+        {% for block in section.blocks %}
+        <div class="list-block__slide">
+          <div class="list-block__row js-questionnaire-result" id="questionnaire-result-{{ block.settings.title }}">
+            <div class="section-header text-center">
+              <h3 class="h1 questionnaire-heading"><ly-as-9405348>...and which model?</ly-as-9405348></h3>
+            </div>
+
+            <div class="list-block__read-container clearfix">
+			 {% for i in (1..10) %}
+              {% capture name %}model_title_{{ i }}{% endcapture %}
+              {% capture subtitle %}model_subtitle_{{ i}}{% endcapture %}
+              {% capture link %}model_link_{{ i }}{% endcapture %}
+             {% if block.settings[name] != blank %}
+              <div class="list-block__col small--one-half medium-up--one-third">
+                <div class="list-block__card">
+                  <a href="{{ block.settings[link] }}" class="list-block__box list-block__box--padding">
+                    <div class="list-block__inner">
+                      <h3 class="list-block__box-title">{{ block.settings[name] }}</h3>
+                      <ul class="list-block__contents">
+                        <li class="list-block__content list-block__desc">{{block.settings[subtitle] }}</li>
+                      </ul>
+                    </div>
+                  </a>
+                </div>
+              </div>
+             {% endif %}
+              {% endfor %}
+             </div>
+            
+          </div>
+        </div>
+    	{% endfor %}
+      </div>
+    </div> 
+  </div> 
+  </div> 
+
+</div>
+
+{% schema %}
+  {
+    "name": "Model Section",
+    "settings": [
+
+
+
+
+	],
+       "blocks":[  
+      {  
+        "type":"image_picker",
+        "name":"Device",
+        "settings":[
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Choose image"
+			},
+            {
+             "type":"text",
+             "id":"title",
+             "label":"Title"
+            },
+			{
+				"type":"textarea",
+				"id":"sub_title",
+				"label":"Sub Text"
+			},
+			{
+				"type":"header",
+				"content":"Models"
+		    },
+            {
+				"type":"header",
+				"content":"Model 1"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_1",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_1",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_1",
+				"label":"Link"
+			},
+             {
+				"type":"header",
+				"content":"Model 2"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_2",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_2",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_2",
+				"label":"Link"
+			},
+            {
+				"type":"header",
+				"content":"Model 3"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_3",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_3",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_3",
+				"label":"Link"
+			},
+            {
+				"type":"header",
+				"content":"Model 4"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_4",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_4",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_4",
+				"label":"Link"
+			},
+             {
+				"type":"header",
+				"content":"Model 5"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_5",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_5",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_5",
+				"label":"Link"
+			},
+             {
+				"type":"header",
+				"content":"Model 6"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_6",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_6",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_6",
+				"label":"Link"
+			},
+			 {
+				"type":"header",
+				"content":"Model 7"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_7",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_7",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_7",
+				"label":"Link"
+			},
+			 {
+				"type":"header",
+				"content":"Model 8"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_8",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_8",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_8",
+				"label":"Link"
+			},
+		    {
+				"type":"header",
+				"content":"Model 9"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_9",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_9",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_9",
+				"label":"Link"
+			},
+			 {
+				"type":"header",
+				"content":"Model 10"	
+			},
+            {
+				"type":"text",
+				 "id":"model_title_10",
+				"label":" Title"
+			},
+            {
+				"type":"text",
+				"id":"model_subtitle_10",
+				"label":"Sub Text"
+			},
+             {
+				"type":"url",
+				"id":"model_link_10",
+				"label":"Link"
+			}
+          
+         ]
+       }
+     ],
+    "presets":[  
+      {  
+         "name":"Model Section",
+         "category":"Advanced"
+     }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

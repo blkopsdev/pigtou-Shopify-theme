@@ -1,0 +1,172 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div data-section-id="{{ section.id }}" class="collection-template" data-section-type="collection-page">
+
+  {% case section.settings.grid %}
+  {% when 2 %}
+  {%- assign grid_item_width = 'desktop-6 tablet-3 mobile-half' -%}
+  {% when 3 %}
+  {%- assign grid_item_width = 'desktop-4 tablet-2 mobile-half' -%}
+  {% when 4 %}
+  {%- assign grid_item_width = 'desktop-3 tablet-2 mobile-half' -%}
+  {% endcase %}
+
+  {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
+  {% paginate collection.products by product_limit %}
+
+    <h2>{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h2>
+
+  
+  {% if collection.description != blank %}
+<div id="collection-description " class="desktop-12 mobile-3  col-mar-0 ">
+ 
+  <div class="rte">{% comment %}ly_code_replace_for_[ collection.description | remove: "[banner]" ]_begin{% endcomment %}{% include 'ly-description' with collection %}{{ ly_translation | remove: "<ly-as-10096471>[banner]</ly-as-10096471>" }}{% comment %}ly_code_replace_end{% endcomment %}</div>
+  
+  {% if collection.image %}
+	<div class="collection-banner">
+	
+	{%- assign load_img_src = collection.image | img_url: '10x', format: 'pjpg' -%}
+	{% comment %} {%- assign load_img_src = collection.image | img_url: 'large' -%} {% endcomment %}
+	{%- assign load_img_class = '' -%}
+	<img
+	{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+	alt="" 
+	/>
+
+	{% comment %} <img src="{{ collection.image | img_url: 'large' }}" />  {% endcomment %}
+	<h2 class="collection-banner-title">{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h2> </div>{% endif %}
+  
+</div>
+  {% endif %}
+<div class="clear"></div>
+
+
+<div id="full-width-filter" class="desktop-12 tablet-6 mobile-3">
+  {% include 'filter' %}
+</div>
+
+
+{% if section.blocks.size > 0 %}
+{% include 'collection-sidebar' %}
+{% endif %}
+
+
+
+<div id="product-loop" {% if section.blocks.size > 0 %}class="desktop-10 tablet-5 mobile-3"{% endif %}>
+  {% assign products-per-row = section.settings.products-per-row %}
+
+  {% for product in collection.products %}
+  <div class="product-index {{ grid_item_width }}" data-alpha="{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-price="{{ product.price }}">
+    {% include 'product-listing' %}
+  </div>
+  {% endfor %}
+</div>
+
+{% include 'pagination' %}
+{% endpaginate %}
+</div>
+
+{% schema %}
+  {
+    "name": "Collection",
+	"max_blocks":4,
+    "settings": [
+      {
+        "type": "range",
+        "id": "grid",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "label": "Products per row",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "rows",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "Rows",
+        "default": 4
+      },
+      {
+        "type": "checkbox",
+        "id": "sort_by",
+        "label": "Show sort by",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Your customers can filter collections using tags that you have added to your products. [See our setup instructions for these filters](http:\/\/support.undergroundmedia.co.uk\/customer\/en\/portal\/articles\/1348811-filter-collections-with-tags)."
+      },
+      {
+        "type": "text",
+        "id": "filter-1-title",
+        "label": "Filter 1 title",
+        "default": "Filter by X"
+      },
+      {
+        "type": "textarea",
+        "id": "sort_a",
+        "label": "Filter 1 tags",
+        "info": "Comma separated"
+      },
+      {
+        "type": "text",
+        "id": "filter-2-title",
+        "label": "Filter 2 title",
+        "default": "Filter by Y"
+      },
+      {
+        "type": "textarea",
+        "id": "sort_b",
+        "label": "Filter 2 tags",
+        "info": "Comma separated"
+      },
+      {
+        "type": "text",
+        "id": "filter-3-title",
+        "label": "Filter 3 title",
+        "default": "Filter by Z"
+      },
+      {
+        "type": "textarea",
+        "id": "sort_c",
+        "label": "Filter 3 tags",
+        "info": "Comma separated"
+      }
+	],
+   "blocks":[
+      {
+         "type":"menu",
+         "name":"Menu",
+         "settings":[
+            {
+               "type": "link_list",
+               "id": "side_nav",
+               "label": "Sidebar menu"
+           },
+           {
+            "type": "text",
+            "id": "title",
+            "label": "Menu title",
+            "default": "Explore"
+           }
+         ]
+      },
+
+      {
+         "type":"vendor_list",
+         "name":"Vendor list",
+		 "limit": 1,
+         "settings":[
+          {
+          "type": "text",
+          "id": "shop_by_designer_title",
+          "label": "Vendor list title",
+          "default": "Shop by Designer"
+          }
+         ]
+      }
+   ]
+  }
+{% endschema %}

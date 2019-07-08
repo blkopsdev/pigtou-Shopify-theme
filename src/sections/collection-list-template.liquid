@@ -1,0 +1,95 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div data-section-id="{{ section.id }}" class="collection-list-template">
+
+  {% case section.settings.grid %}
+  {% when 2 %}
+  {%- assign grid_item_width = 'desktop-6 tablet-3 mobile-half' -%}    
+  {% when 3 %}
+  {%- assign grid_item_width = 'desktop-4 tablet-2 mobile-half' -%}
+  {% when 4 %}
+  {%- assign grid_item_width = 'desktop-3 tablet-2 mobile-half' -%}
+  {% endcase %} 
+
+  {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}   
+  {% paginate collections by product_limit %}
+
+  {% if section.settings.image != blank %}
+  {%- assign image_size = '2048x' -%}
+  {%- assign img_url = section.settings.image | img_url: image_size -%}
+  <div class="collection-banner">
+		{%- assign load_img_src = section.settings.image | img_url: '10x', format: 'pjpg' -%}
+		{% comment %} {%- assign load_img_src = img_url -%} {% endcomment %}
+		{%- assign load_img_class = '' -%}
+		<img
+		{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+		alt="" 
+		/>
+    {% comment %} <img src="{{ img_url }}"> {% endcomment %}
+  </div>
+  {% endif %}  
+
+  <div id="content" class="row">	
+    {% if settings.breadcrumb %}
+    {% include 'breadcrumb' %}	
+    {% endif %}	  
+
+    <div id="collection-description" class="desktop-12 mobile-3">
+      <h1>{% comment %}ly_i18n_replace_for_[ 'collections.general.all_collections' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.general.all_collections' | t }}{% endcapture %}{% include 'ly-static-string' with '9405305' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h1>
+      {% if section.settings.text != blank %}
+      {{ section.settings.text }}
+      {% endif %}
+    </div>  
+    
+ 
+    
+
+    <div id="product-loop">
+      {% for collection in collections %}
+      {% assign products-per-row = section.settings.products-per-row %}
+      {% include 'collection-grid-item' %}
+      {% endfor %}
+    </div>
+
+    {% include 'pagination' %}
+
+    {% endpaginate %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection grid",
+    "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+    {
+        "id": "text",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Add some descriptive text to your all collections page.</p>"
+     },
+      {
+        "type": "range",
+        "id": "grid",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "label": "Collections per row",
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "rows",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "Rows",
+        "default": 4
+      }
+
+	]
+  }
+{% endschema %}

@@ -1,0 +1,39 @@
+{% layout none %}
+
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+
+
+<div class="vendor-inner slider-innnerr ">
+<!--   //<a href="https://pigtou.com/pages/vinyl-skins">« back</a> -->
+  <h3 class="cus-vendor cus-main"></h3>
+  <ul class="vendor-ul">
+{% assign vendor_list = '' %}
+{% for product in collection.products %}
+{% if vendor_list contains product.vendor %}
+{% else %}
+    
+    {% assign vendor-name = collection.title | split: ' ' | last %}
+<li class="">
+<!--     <a href="https://pigtou.com/collections/vendors?q={{-product.vendor-}}" id="next1f" class="slider-lii list-block__card" data-linnkk="https://pigtou.com/collections/vendors?q={{-product.vendor-}}">
+ -->
+     <a href="https://pigtou.com/collections/{{collection.handle}}" id="next1f" class="slider-lii list-block__card" data-linnkk="https://pigtou.com/collections/vendors?q={{-product.vendor-}}">
+
+ <div class="li-inner"> 
+   <p class="cus-title" {{ collection.title | split: ' ' | first}} > {{collection.title}}</p>
+   <h3 class="cus-vendor" >{{ product.vendor}}</h3>
+   <p class="cus-title cus-sub-tle" {{ collection.title | split: ' ' | last}}> {{ vendor-name }}</p>
+   
+  </div>
+  </a>
+  </li>
+{% capture temp %}{{ vendor_list }}{{ product.vendor }}{% endcapture %}{% assign vendor_list = temp %}
+{% endif %}
+    {% endfor %}
+  </ul>
+</div>
+
+<style>
+  
+ 
+ 
+</style>

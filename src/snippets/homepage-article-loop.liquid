@@ -1,0 +1,34 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div class="article-index desktop-6 tablet-half mobile-3{% cycle ' first', ' last' %}" id="article-{{ article.id }}" data-alpha="{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">   
+  <div class="article-info"> 
+    <div class="article-info-inner">
+      <h3><a href="{{ article.url }}">{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></h3>
+      {% if section.settings.show-date %}
+      {% assign published_at = article.published_at | date: format: 'month_date_year' %}
+      <p class="posted">{% comment %}ly_i18n_replace_for_[ 'blogs.article.posted_on_date_html' | t: date: published_at ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.posted_on_date_html' | t: date: published_at }}{% endcapture %}{% include 'ly-static-string' with '9405410' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = published_at  %}{% assign ly_template = ly_template | replace: '[[date]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+      {% endif %}
+      {% if article.image %}
+      <div class="article-image">
+        <div class="article-image">
+          <a href="{{ article.url }}">
+						{%- assign load_img_src = article | img_url: '10x', format: 'pjpg' -%}
+						{% comment %} {%- assign load_img_src = article | img_url: '800x' -%} {% endcomment %}
+						{%- assign load_img_class = '' -%}
+						<img
+						{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+						alt="" 
+						/>
+            {% comment %} <img src="{{ article | img_url: '800x' }}"> {% endcomment %}
+          </a>
+        </div>
+      </div>
+      {% endif %}           
+      <div class="article-content">
+        {% comment %}ly_code_replace_for_[ article.excerpt ]_begin{% endcomment %}{% include 'ly-excerpt' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+      </div>
+      <div class="readmore">
+        <a href="{{ article.url }}">{% comment %}ly_i18n_replace_for_[ 'blogs.article.read_more' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.read_more' | t }}{% endcapture %}{% include 'ly-static-string' with '9405411' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<!-- {% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+{% form 'customer' %}
+    {{ form.errors | default_errors }}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <p class="note form-success{% unless form.posted_successfully? %} hide{% endunless %}">
+        <strong><ly-as-9405425>Thanks for contacting us. We'll get back to you as soon as possible</ly-as-9405425></strong>
+    </p>
+
+    <div id="newsletter-wrapper" {% if form.posted_successfully? %}class="hide"{% endif %}>
+        <input id="newsletter_text" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="<ly-as-9405426>Enter email</ly-as-9405426>" name="contact[email]" id="Email" class="input-group-field email" aria-label="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.newsletter_email' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.newsletter_email' | t }}{% endcapture %}{% include 'ly-static-string' with '9405427' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" autocorrect="off" autocapitalize="off" required>
+        <button type="submit" id="newsletter_submit" class="btn btn-default" name="commit" id="subscribe" value="">
+        <i class="fa fa-angle-right"></i>
+      </button>
+
+</div>
+ 
+{% endform %} -->
+
+<div class="klaviyo-form-JAMSvE"></div>
+      {% include 'klaviyo-newsletter' %}

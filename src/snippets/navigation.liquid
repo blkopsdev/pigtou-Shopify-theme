@@ -1,0 +1,145 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<nav id="nav" {% if section.settings.full-width-header %} class="gridlock-fluid cst-nav"{% endif %}>
+  {% if section.settings.full-width-header %}<div class="row">{% endif %}
+  <div id="navigation" class="row">
+    <ul id="nav" class="desktop-12 mobile-3">
+      {% assign menu = linklists[section.settings.main_nav] %}
+      {% for link in menu.links %}
+
+      {% assign meganav = false %}
+      {% for block in section.blocks %}
+      {% if block.settings.menu_item == link.title %}
+      {% capture megalink %}
+
+      <!-- Start megamenu -->
+      <li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}
+        <ul class="megamenu">
+          <div class="mega-container desktop-12 row">
+           
+            <span class="{% if block.settings.nav-image != blank %}desktop-5{% else %}desktop-12{% endif %} tablet-6">
+              {% case link.links.size %}
+              {% when 0 %}
+              {% when 1 %}
+              {% assign column_width = 'list' %}
+              {% when 2 %}
+              {% assign column_width = 'list' %}
+              {% when 3 or 6 %}
+              {% assign column_width = 'tablet-fourth' %}
+              {% else %}
+              {% assign column_width = 'tablet-fourth' %}
+              {% endcase %}
+              {% for sub_link in link.links %}
+              <li class="{{ column_width }}">
+                <h4><a href="{{ sub_link.url }}">{% comment %}ly_code_replace_for_[ sub_link.title ]_begin{% endcomment %}{% include 'ly-title' with sub_link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></h4>
+                {% if sub_link.links != blank %}
+                <ul class="mega-stack">
+                  {% for sub_sub_link in sub_link.links %}
+                  <li class="{% if link.active %}current{% endif %}"><a href="{{ sub_sub_link.url }}">{% comment %}ly_code_replace_for_[ sub_sub_link.title ]_begin{% endcomment %}{% include 'ly-title' with sub_sub_link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </li>
+              {% endfor %}
+            </span>
+             
+            <span class="desktop-7 tablet-hide mm-image">
+              {% if block.settings.right_title != blank %}
+              <h4>{{ block.settings.right_title }}</h4>
+              {% endif %}
+              {% if block.settings.nav-image != blank %}
+              {% assign collection = collections[block.settings.link] %}
+              {%- assign image_size = '300x' -%}
+              <a href="{{ block.settings.link_new }}">
+                <img class="lazyload" data-src="{{ block.settings.nav-image | img_url: image_size }}">
+                <p>{{ block.settings.title }}</p>
+              </a>
+            {% endif %}
+              {% if block.settings.nav-image_1 != blank %}
+              {% assign collection = collections[block.settings.link_1] %}
+                            {%- assign image_size = '300x' -%}
+              <a href="{{ block.settings.link_new_1 }}">
+                <img class="lazyload" data-src="{{ block.settings.nav-image_1 | img_url: image_size }}">
+                <p>{{ block.settings.title_1 }}</p>
+              </a>
+              {% endif %}
+              {% if block.settings.nav-image_2 != blank %}
+              {% assign collection = collections[block.settings.link_2] %}
+              {%- assign image_size = '300x' -%}
+              <a href="{{ block.settings.link_new_2 }}">
+                <img class="lazyload" data-src="{{ block.settings.nav-image_2 | img_url: image_size }}">
+               <p>{{ block.settings.title_2 }}</p>
+              </a>
+            {% endif %}
+              
+            {% if block.settings.nav-image_3 != blank %}
+              {%- assign image_size = '300x' -%}
+              {% assign collection = collections[block.settings.link_3] %}
+              <a href="{{ block.settings.link_new_3 }}">
+                <img class="lazyload" data-src="{{ block.settings.nav-image_3 | img_url: image_size }}">
+                <p>{{ block.settings.title_3 }}</p>
+              </a>
+            {% endif %}
+              
+            </span>
+            
+            
+          </div>
+        </ul>
+      </li>
+      {% endcapture %}
+      {% assign meganav = true %}
+      {% endif %}
+      {% endfor %}
+      {% if meganav %}
+      {{ megalink }}
+      <!-- End megamenu & start multi column where needed -->
+      {% elsif link.links != blank %}
+        <!-- How many links to show per column -->
+        {% assign num = section.settings.linklist-breakpoint | plus:0 %}
+        <!-- How many links in this list -->
+        {% assign numx = linklists[link.handle].links.size %}
+        <!-- Number of links divided by number per column -->
+        {% assign numy = numx | divided_by: num %}
+        <!-- Modulo balance of total links divided by links per column -->
+        {% assign mod = numx | modulo:num %}
+        <!-- Calculate the modulo offset -->
+        {% assign mod_offset = numx | minus:mod %}
+
+        {% comment %}
+        {{ num }} chosen number of links per column
+        {{ numx }} number of links in the linklist
+        {{ numy }} Columns needed
+        {{ mod }}  Balance for last column
+        {{ mod_offset }} links to offset before adding mod
+        {% endcomment %}
+
+      <!-- Start math for calculated multi column dropdowns -->
+      <li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}
+        {% if link.links.size > num %}
+		      {% include 'navigation-columns' %}
+        <!-- if the list is less than the chosen number -->
+        {% else %}
+        <ul class="submenu">
+        {% for sub_link in link.links %}
+          <li class="has_sub_menu" aria-haspopup="true" aria-expanded="false"><a href="{{ sub_link.url }}">{% comment %}ly_code_replace_for_[ sub_link.title ]_begin{% endcomment %}{% include 'ly-title' with sub_link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+             {% if sub_link.links != blank %}
+            <ul class="nested">
+              {% for sub_sub_link in sub_link.links %}
+              <li><a href="{{ sub_sub_link.url }}">{% comment %}ly_code_replace_for_[ sub_sub_link.title ]_begin{% endcomment %}{% include 'ly-title' with sub_sub_link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
+      <!-- stop doing the math -->
+      {% else %}
+      <li class=" {% if link.active %}current{% endif %}">{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% if section.settings.full-width-header %}</div>{% endif %}
+</nav>

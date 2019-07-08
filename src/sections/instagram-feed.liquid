@@ -1,0 +1,34 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+
+<script src="{{ '__opt_instagram.js' | asset_url }}" data-feed-id="fathom-bracelets" data-money-format="€<%= amount %>" data-theme="showcase_v2_5" data-page-size="12"></script>
+{% comment %} <script src="//foursixty.com/media/scripts/fs.embed.v2.5.js" data-feed-id="fathom-bracelets" data-money-format="€<%= amount %>" data-theme="showcase_v2_5" data-page-size="12"></script> {% endcomment %}
+
+
+
+{% schema %}
+{
+	"name": "Instagram",
+	"settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Follow us on Instagram"
+    },
+
+      {
+          "type": "textarea",
+          "id": "instagram-access-token",
+          "label": "Instagram access token",
+      	  "info": "Required for permission to show your Instagram content [instructions here](http://support.undergroundmedia.co.uk/customer/en/portal/articles/2386318-home-page---instagram-feed) for setup."
+      }
+  ],
+  "presets": [
+    {
+      "name": "Instagram",
+      "category": "Social media"
+    }
+  ]
+}
+{% endschema %}
+

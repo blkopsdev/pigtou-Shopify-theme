@@ -1,0 +1,47 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+{%- assign image_size = '600x' -%}
+{% if collection.empty? %}
+{% comment %}add default state for collection block in storefront editor{% endcomment %}
+{% capture collection_title %}{{ 'homepage.onboarding.collection_title' | t }}{% endcapture %}
+{% capture collection_image_url %}{% endcapture %}
+{% else %}
+{% if collection.image %}
+{%- assign load_img_src = collection | img_url: '10x', format: 'pjpg' -%}
+{% capture collection_image_url %}{{ collection | img_url: image_size }}{% endcapture %}
+{% elsif collection.products.first %}
+{%- assign load_img_src = collection.products.first | img_url: '10x', format: 'pjpg' -%}
+{% capture collection_image_url %}{{ collection.products.first | img_url: image_size }}{% endcapture %}
+{% endif %}
+{% capture collection_title %}{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}{% endcapture %}
+{% endif %}
+
+<div class="product-index {{ grid_item_width }}" data-alpha="{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">     
+  <div class="prod-container">
+    <a href="{{ collection.url }}" title="{{ collection_title }}">
+      {% if collection.image %}
+				{%- assign load_img_class = '' -%}
+				<img
+				{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+				alt="" 
+				/>
+      	{% comment %} <img src="{{ collection_image_url }}"> {% endcomment %}
+      {% else %}
+
+			{%- assign load_img_src = collection.products.first | img_url: '10x', format: 'pjpg' -%}
+			{%- assign load_img_class = '' -%}
+			<img
+			{% include '__opt_load_img' src:collection.products.first | img_url: image_size class:load_img_class %}
+			alt="" 
+			/>
+
+      {% comment %} <img src="{{ collection.products.first | img_url: image_size }}"> {% endcomment %}
+      {% endif %}
+    </a>     
+  </div>
+  <div class="product-info">
+    <a href="{{ collection.url }}" title="{{ collection_title }}">
+      <h3>{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h3>
+      <p>{{ collection.products_count }} {% comment %}ly_i18n_replace_for_[ 'collections.general.items' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.general.items' | t }}{% endcapture %}{% include 'ly-static-string' with '9405389' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+    </a>
+  </div>
+</div>

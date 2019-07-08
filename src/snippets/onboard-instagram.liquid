@@ -1,0 +1,7 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% for i in (1..5) %}
+<div class="all-fifth onboard-instagram">
+  {% capture current %}{{ forloop.index }}{% endcapture %}
+  {%- assign placeholder = 'product-' | append: current -%}
+  {{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}
+</div>
+{% endfor %}

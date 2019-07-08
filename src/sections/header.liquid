@@ -1,0 +1,554 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+
+<div class="header-section" data-section-id="{{ section.id }}" data-section-type="header-section">
+<div id="top-search-wrapper" class="col-sm-12 col-md-12 col-lg-12">
+		<div class="top-search">
+			<form id="search-page-form" action="/search">
+				<div id="search-wrapper">
+					<input type="hidden" name="type" value="product,">
+					<input id="search_text" name="q" type="text" size="20" placeholder="<ly-as-9405312>Search...</ly-as-9405312>">
+					<div class="search_bar--controls">
+						<input id="search_submit" type="submit" border="0" value="">
+						<a href="#" class="search-show" title="<ly-as-9405313>Search</ly-as-9405313>">
+							<i class="fa fa-times fa-2x"></i>
+						</a>
+					</div>
+				</div>
+			</form>
+		</div>
+</div>
+<div id="top-bar"{% if section.settings.full-width-header %} class="gridlock-fluid"{% endif %}>
+  {% if section.settings.full-width-header %}<div class="row">{% endif %}
+  <div class="row">
+    <div class="desktop-4 tablet-4 mobile-4 search mobile-hide">
+      <ul>
+        <li class="searchbox cst-searchbox">
+              <form action="/search" method="get">
+                <input type="text" name="q" id="q" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.search.placeholder' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.placeholder' | t }}{% endcapture %}{% include 'ly-static-string' with '9405314' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" />
+              </form>
+            </li>
+      </ul>
+    </div>
+    <div class="desktop-4 tablet-4 mobile-2 top-message">
+      {{ section.settings.top_bar_message }}
+    </div>
+    <div class="desktop-4 tablet-2 mobile-1 top-currency">
+      
+      <div class="new-currency">
+        {% comment %}
+      {% include 'currencies-switcher' %}
+       {% endcomment %}
+   <div class='currencyRoboSelect'></div>
+      </div>
+     
+       {% include 'ly-languages-switcher' %}
+    
+    </div>
+  </div>
+  {% if section.settings.full-width-header %}</div>{% endif %}
+</div>
+
+    <header{% if section.settings.full-width-header %} class="gridlock-fluid"{% endif %}>
+      {% if section.settings.full-width-header %}<div class="row">{% endif %}
+      <div id="identity" class="row">
+        {% comment %}
+        <div id="logo" class="{% if section.settings.logo-center %}desktop-4 desktop-push-4 tablet-6{% else %}desktop-8 tablet-3{% endif %} mobile-3">
+          {% if section.settings.logo != blank %}
+          {%- assign image_size = '600x' -%}
+          <a href="/">
+            <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: langify_shop_name }}" itemprop="logo">
+          </a>
+          {% else %}
+          <a href="/">{{ langify_shop_name }}</a>
+          {% endif %}
+        </div>
+{% endcomment %}
+        <div class="desktop-4 {% if section.settings.logo-center %}tablet-6{% else %}tablet-3{% endif %} mobile-3">
+          <ul id="cart"{% if section.settings.logo-center %} class="tablet-3"{% endif %}>
+            {% if shop.customer_accounts_enabled %}
+            <li>
+              {% if customer  %}
+              <a href="/account">{% comment %}ly_i18n_replace_for_[ 'layout.customer.my_account' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.customer.my_account' | t }}{% endcapture %}{% include 'ly-static-string' with '9405315' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} <i class="fa fa-user"></i></a>
+              <a href="/account/logout">{% comment %}ly_i18n_replace_for_[ 'layout.customer.log_out' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.customer.log_out' | t }}{% endcapture %}{% include 'ly-static-string' with '9405316' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+              {% else %}
+              <a href="/account/login">{% comment %}ly_i18n_replace_for_[ 'layout.customer.my_account' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.customer.my_account' | t }}{% endcapture %}{% include 'ly-static-string' with '9405315' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}  <i class="fa fa-user"></i></a>
+              {% endif %}
+            </li>
+            {% endif %}
+            {% comment %}
+            {% if settings.show_multiple_currencies %}
+            <li>{% include 'currencies-switcher' %}</li>
+            {% endif %}
+            
+            <li class="cart-overview">
+              <a href="/cart" {% if settings.ajax_cart_method == 'drawer' %}class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"{% endif %}>
+                <span class="cart-words">{% comment %}{% comment %}ly_i18n_replace_for_[ 'cart.general.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'cart.general.title' | t }}{% endcapture %}{% include 'ly-static-string' with '9405317' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}{% endcomment %}</span>
+                {% if section.settings.cart_icon == 'cart' %}  <i class="fa fa-shopping-cart" aria-hidden="true"></i>{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag" aria-hidden="true"></i>{% endif %}
+                <span class="CartCount">{{ cart.item_count }}</span>
+              </a>
+            </li>
+            
+            <li class="shifter-handle2"><i class="fa fa-bars" aria-hidden="true"></i></li>
+            {% endcomment %}
+          </ul>
+{% comment %}
+          <ul id="social-links"{% if section.settings.logo-center %} class="tablet-3"{% endif %}>
+            {% if settings.facebook_url != blank %}<li><a href="{% comment %}ly_new_settings_replace_for_[ settings.facebook_url ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id9405309"] %}{% assign ly_translation = shop.metafields[namespace]["id9405309"] %}{% else %}{% assign ly_translation = settings.facebook_url %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}" target="_blank"><i class="fa fa-facebook"></i></a></li>{% endif %}
+            {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter"></i></a></li>{% endif %}
+            {% if settings.pinterest_url != blank %}<li><a href="{% comment %}ly_new_settings_replace_for_[ settings.pinterest_url ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id9405310"] %}{% assign ly_translation = shop.metafields[namespace]["id9405310"] %}{% else %}{% assign ly_translation = settings.pinterest_url %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}" target="_blank"><i class="fa fa-pinterest"></i></a></li>{% endif %}
+            {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr"></i></a></li>{% endif %}
+            {% if settings.youtube_url != blank %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="fa fa-youtube"></i></a></li>{% endif %}
+            {% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus"></i></a></li>{% endif %}
+            {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{% comment %}ly_new_settings_replace_for_[ settings.instagram-id ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id9405311"] %}{% assign ly_translation = shop.metafields[namespace]["id9405311"] %}{% else %}{% assign ly_translation = settings.instagram-id %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}" target="_blank"><i class="fa fa-instagram"></i></a></li>{% endif %}
+            {% if section.settings.show_search %}
+			<li class="searchbox">
+              <form action="/search" method="get">
+                <input type="text" name="q" id="q" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.search.placeholder' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.placeholder' | t }}{% endcapture %}{% include 'ly-static-string' with '9405314' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" />
+              </form>
+            </li>
+            {% endif %}
+          </ul>
+          {% endcomment %}
+        </div>
+      </div>
+      {% if section.settings.full-width-header %}</div>{% endif %}
+    </header>
+<div id="new-nav" class="new-header-nav {% if section.settings.full-width-header %}sticky{% endif %}">
+    {% include 'navigation' %}
+  
+  <ul class="mobile-slide-menu">
+    <li class="shifter-handle2"><i class="fa fa-bars" aria-hidden="true"></i></li>
+  </ul>
+  <div id="logo" class="newlogo">
+          {% if section.settings.logo != blank %}
+          {%- assign image_size = '600x' -%}
+					{%- assign load_img_src = section.settings.logo | img_url: '120x', format: 'pjpg' -%}
+					{% comment %} {%- assign load_img_src = section.settings.logo | img_url: image_size -%} {% endcomment %}
+					{%- capture load_img_class -%}
+					{%- endcapture -%}
+          <a href="/">
+						{% comment %} <img
+						{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+						alt="{{ section.settings.logo.alt | default: langify_shop_name }}" 
+						itemprop="logo"
+						/>					 {% endcomment %}
+            <img class="lazyload" data-src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: langify_shop_name }}" itemprop="logo">
+          </a>
+         
+          {% endif %}
+        </div>
+  <div class="cst-cart">
+    <ul>
+      <li>
+        <a href="#" class="search-show " title="<ly-as-9405313>Search</ly-as-9405313>">
+          <i class="fa fa-search fa-2x"></i>
+        </a>
+      </li>
+       <li class="cart-overview">
+              <a href="/cart" {% if settings.ajax_cart_method == 'drawer' %}class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"{% endif %}>
+                <span class="cart-words">{% comment %}{% comment %}ly_i18n_replace_for_[ 'cart.general.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'cart.general.title' | t }}{% endcapture %}{% include 'ly-static-string' with '9405317' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}{% endcomment %}</span>
+                 {% if section.settings.cart_icon == 'cart' %}  <i class="fa fa-shopping-cart" aria-hidden="true"></i>{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag" aria-hidden="true"></i>{% endif %}
+                <span class="CartCount{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
+              </a>
+            </li>
+    </ul>
+  </div>
+  </div>
+  <div class="mobile__nav_bar {% if section.settings.full-width-header %}mobile_sticky{% endif %}" style="display:none;">
+    <ul class="mobile-slide-menu">
+    <li class="shifter-handle2"><i class="fa fa-bars" aria-hidden="true"></i></li>
+  </ul>
+    <div id="logo" class="newlogo">
+          {% if section.settings.logo != blank %}
+          {%- assign image_size = '600x' -%}
+					{%- assign load_img_src = section.settings.logo | img_url: '120x', format: 'pjpg' -%}
+					{% comment %} {%- assign load_img_src = section.settings.logo | img_url: image_size -%} {% endcomment %}
+					{%- capture load_img_class -%}
+					{%- endcapture -%}
+          <a href="/">
+						{% comment %} <img
+						{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+						alt="{{ section.settings.logo.alt | default: langify_shop_name }}" 
+						itemprop="logo"
+						/> {% endcomment %}
+            <img class="lazyload" data-src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: langify_shop_name }}" itemprop="logo">
+          </a>
+         
+          {% endif %}
+        </div>
+  <div class="cst-cart">
+    <ul>
+      <li>
+        <a href="#" class="search-show " title="<ly-as-9405313>Search</ly-as-9405313>">
+          <i class="fa fa-search fa-2x"></i>
+        </a>
+      </li>
+       <li class="cart-overview">
+              <a href="/cart" {% if settings.ajax_cart_method == 'drawer' %}class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false"{% endif %}>
+                <span class="cart-words">{% comment %}{% comment %}ly_i18n_replace_for_[ 'cart.general.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'cart.general.title' | t }}{% endcapture %}{% include 'ly-static-string' with '9405317' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}{% endcomment %}</span>
+               {% if section.settings.cart_icon == 'cart' %}  <i class="fa fa-shopping-cart" aria-hidden="true"></i>{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag" aria-hidden="true"></i>{% endif %}
+                <span class="CartCount{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
+              </a>
+            </li>
+    </ul>
+  </div>
+  </div>
+<style>
+  {% if section.settings.logo != blank %}
+  #logo img { max-width: {{ section.settings.logo_max_width }}px; }
+  {% endif %}
+  #logo {
+    {% if section.settings.logo-center %}text-align: center;{% endif %}
+  }
+
+  #top-bar, #top-bar p {
+    font-size: {{ section.settings.top_bar_size }}px;
+    font-weight: {{ section.settings.top_bar_weight }};
+  }
+
+  header #q {
+    font-size: {{ section.settings.cart-links-size }}px;
+  }
+
+  ul#cart li a {
+    font-size: {{ section.settings.cart-links-size }}px;
+    font-weight: {{ section.settings.cart-weight }};
+  }
+
+  select.currency-picker {
+    font-size: {{ section.settings.cart-links-size }}px;
+    font-weight: {{ section.settings.cart-weight }};
+  }
+
+  #logo {
+    font-weight: {{ section.settings.logo-weight }};
+    font-size: {{ section.settings.logo-size }}px;
+    text-transform: {{ section.settings.logo-transform }};
+  }
+
+  #logo a {
+    {% if section.settings.use_logo_image %}line-height: 0; {% endif %}
+  }
+
+  nav {
+    {% if section.settings.nav-center %}text-align: center;{% endif %}
+     line-height: {{ section.settings.nav-height }}px;
+  }
+
+  {% if section.settings.logo-center %}
+  @media screen and ( min-width: 740px ) and ( max-width: 980px ) {
+    ul#social-links {
+      text-align: left;
+      float: left;
+    }
+  }
+  {% endif %}
+  
+  @media screen and (max-width:740px) {
+    #logo img {
+      max-width: 100px;
+    }
+  }
+
+</style>
+<script>
+  $(document).ready(function() {
+        $(".search-show").off('click').on('click', function() {
+            $("#top-search-wrapper").toggleClass('expanded');
+            $("#top-search-wrapper #search_text").focus();
+        });
+        if ($(window).width() < 767) {
+            $('.mobile-menu-close').trigger('click');
+        }
+    });
+  </script>
+</div>
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "full-width-header",
+        "label": "Allow full width header"
+      },
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+	  {
+        "type": "checkbox",
+        "id": "logo-center",
+        "label": "Center logo"
+      },
+   	 {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    	},
+      {
+        "type": "range",
+        "id": "logo_max_width",
+        "min": 100,
+        "max": 500,
+        "step": 5,
+        "unit": "px",
+        "label": "Custom logo width",
+        "default": 200
+      },
+      {
+        "type": "range",
+        "id": "logo-size",
+        "min": 12,
+        "max": 36,
+        "step": 1,
+        "unit": "px",
+        "label": "Logo size",
+        "default": 18
+      },
+      {
+        "type": "select",
+        "id": "logo-transform",
+        "label": "Logo case",
+        "options": [
+          {
+            "value": "uppercase",
+            "label": "Uppercase"
+          },
+          {
+            "value": "none",
+            "label": "Normal"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "logo-weight",
+        "label": "Logo weight",
+        "options": [
+          {
+            "value": "400",
+            "label": "Normal"
+          },
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Message bar"
+      },
+      {
+       "id": "top_bar_message",
+       "type": "richtext",
+       "label": "Text",
+       "default": "<p>Share announcements, or welcome customers to your store.</p>"
+      },
+      {
+        "type": "range",
+        "id": "top_bar_size",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "label": "Message bar text",
+        "default": 13
+      },
+      {
+        "type": "header",
+        "content": "Cart links"
+      },
+      {
+        "type": "range",
+        "id": "cart-links-size",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "label": "Cart and account links",
+        "default": 13
+      },
+      {
+        "type": "select",
+        "id": "cart-weight",
+        "label": "Cart links weight",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Normal"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "800",
+            "label": "Bold"
+          }
+        ]
+      },
+	  {
+        "type": "select",
+        "id": "cart_icon",
+        "label": "Cart icon",
+        "options": [
+          {
+            "value": "cart",
+            "label": "Cart"
+          },
+          {
+            "value": "bag",
+            "label": "Bag"
+          }
+        ],
+	  "info":"You can change the text in your edit language section"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_search",
+        "label": "Show search"
+      },
+     {
+  		"type":"header",
+		"content": "navigation"
+		},
+      {
+        "type": "link_list",
+        "id": "main_nav",
+        "label": "Menu",
+        "default":"main-menu"
+      },
+     {
+        "type": "checkbox",
+        "id": "nav-center",
+        "label": "Center align navigation"
+      },
+      {
+        "type": "range",
+        "id": "nav-height",
+        "min": 30,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Height",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "linklist-breakpoint",
+        "min": 4,
+        "max": 20,
+        "step": 1,
+        "label": "Links per column",
+	      "info": "Break long drop downs into multiple columns",
+        "default": 10
+      }
+    ],
+    "blocks": [
+      {
+        "type": "mega_menu",
+        "name": "Mega menu",
+        "settings": [
+          {
+            "type":"text",
+            "id":"menu_item",
+            "label":"Menu item",
+            "info":"Enter menu item to apply a mega menu"
+          },
+		  {
+			"type":"text",
+			"id":"right_title",
+			"label":"Right Side Title"
+		  },
+		  {
+			"type":"header",
+			"content":"1"
+		  },	
+          {
+           "type": "image_picker",
+           "id": "nav-image",
+           "label": "Featured image"
+         },
+         {
+           "type": "url",
+           "id": "link_new",
+           "label": "Slide link"
+         },
+		 {
+			"type":"text",
+			"id":"title",
+			"label":"Title"
+		},
+    	 {
+			"type":"header",
+			"content":"2"
+		  },
+          {
+           "type": "image_picker",
+           "id": "nav-image_1",
+           "label": "Featured image"
+         },
+         {
+           "type": "url",
+           "id": "link_new_1",
+           "label": "Slide link"
+         },
+		{
+			"type":"text",
+			"id":"title_1",
+			"label":"Title"
+		},
+  		  {
+			"type":"header",
+			"content":"3"
+		  },
+          {
+           "type": "image_picker",
+           "id": "nav-image_2",
+           "label": "Featured image"
+         },
+		 
+          {
+           "type": "url",
+           "id": "link_new_2",
+           "label": "Slide link"
+         },
+		{
+			"type":"text",
+			"id":"title_2",
+			"label":"Title"
+		},
+		  {
+			"type":"header",
+			"content":"4"
+		  },	
+          {
+           "type": "image_picker",
+           "id": "nav-image_3",
+           "label": "Featured image"
+         },
+           {
+           "type": "url",
+           "id": "link_new_3",
+           "label": "Slide link"
+         },
+		{
+			"type":"text",
+			"id":"title_3",
+			"label":"Title"
+		}
+        ]
+      }
+    ]
+}
+{% endschema %}

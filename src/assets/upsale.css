@@ -1,0 +1,397 @@
+
+.confirmed-strap::before {
+  position: relative;
+  top: 1px;
+  content: url("https://cdn.shopify.com/s/files/1/0377/2037/t/37/assets/global-plus.svg?17850010510198406860");
+  width: 6px;
+  height: 6px;
+}
+.confirmed-strap {
+  display: inline-block;
+  font-family: "futura-pt",arial,sans-serif;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+.slider23{
+  width:560px;
+  max-width:95%;
+  margin:20px auto;
+  text-align: center;
+  padding:20px;
+  color:white;
+  .parent-slide{padding:15px;}
+  img{display: block;margin:auto;}
+}
+.strap-upsell__image-wrapper {
+  display: inline-block;
+  margin-bottom: 8px;
+  position: relative;
+  width: 100%;
+}
+
+.mobile-strap-slider .strap-upsell__image, .desktop-strap-slider .strap-upsell__image {
+  border: medium none;
+  transform: rotate(-90deg);
+}
+.slick-slide img {
+  display: block;
+}
+.strap-upsell__image {
+  margin-bottom: 7px;
+  max-width: 100%;
+}
+.strap-upsell__image {
+  display: inline-block;
+  margin: 0 auto;
+
+  transform: rotate(-90deg);
+  transition: all 0.3s ease 0s;
+}
+.strap-upsell__description {
+  color: #929292;
+  font-family: "futura-pt",arial,sans-serif;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin: auto auto 0;
+  padding: 14px 0;
+  text-transform: capitalize;
+  width: 100%;
+}.strap-upsell__price {
+  color: #5c5c5c;
+  font-family: "futura-pt",arial,sans-serif;
+  font-size: 10px;
+  line-height: 1.1;
+}
+.mobile-strap-slider .strap-upsell__description, .desktop-strap-slider .strap-upsell__description {
+  font-size: 11px!important;
+  padding: 2px 0;
+}
+
+.slider23 p{ margin:0 auto}
+.slider23 .slick-prev{top:40%}
+.slider23 .slick-next{top:40%}
+
+.strap-upsell-message {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.desktop-strap-slider .strap-checkbox {
+  width: 20px;
+  height: 20px;
+}
+.chkcls {
+  width: 20px;
+  height: 23px;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+
+}
+.strap-checkbox {
+  cursor: pointer;
+}
+
+.desktop-strap-slider .slick-next:before {
+  font-size: 14px;
+  content: "\f054";
+  font-family: "FontAwesome";
+  color: #929292;
+}
+
+.slick-next:before {
+  content: "â†’";
+}
+
+.slick-prev:before, .slick-next:before {
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  color: #fff;
+  opacity: .75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.desktop-strap-slider .slick-prev:before {
+  font-size: 14px;
+  content: "\f053";
+  font-family: "FontAwesome";
+  color: #929292;
+}
+
+
+.slick-prev:before {
+  content: "â†";
+}
+
+.slick-prev:before, .slick-next:before {
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  color: #fff;
+  opacity: .75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media only screen and (min-width: 1024px)
+
+  .strap-upsell:hover .strap-upsell__price, .strap-upsell:hover .strap-upsell__status, .strap-upsell:hover .strap-upsell__description {
+    color: #000;
+  }
+
+.desktop-strap-slider .strap-upsell__description {
+  white-space: nowrap;
+}
+
+.mobile-strap-slider .strap-upsell__description, .desktop-strap-slider .strap-upsell__description {
+  padding: 2px 0 2px;
+  font-size: 12px;
+}
+@media only screen and (min-width: 768px)
+
+  .strap-upsell__description {
+    font-size: 11px;
+    padding: 2px 0 2px;
+  }
+
+.strap-upsell__description {
+  width: 100%;
+  margin: auto;
+  color: #929292;
+  padding: 14px 0;
+  margin-bottom: 0;
+  text-transform: capitalize;
+  line-height: 1.2;
+  font-family: "futura-pt",arial,sans-serif;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+
+
+
+@media only screen and (min-width: 768px)
+
+  .strap-upsell {
+    width: 32%;
+    margin-right: 2%;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+
+.strap-upsell {
+  text-align: center;
+  position: relative;
+}
+.mobile-strap-slider .strap-checkbox, .desktop-strap-slider .strap-checkbox {
+  border-radius: 35px;
+  width: 28px;
+  height: 28px;
+  background-size: auto;
+}
+.strap-upsell--selected .strap-upsell__price {
+  display: none;
+}
+.strap-upsell--selected .strap-upsell__status {
+  display: block;
+
+}
+.strap-upsell__status {
+  font-size: 11px;
+}
+.mobile-strap-slider .strap-upsell--selected .strap-upsell__status, .mobile-strap-slider .strap-upsell--selected .strap-upsell__description, .mobile-strap-slider .strap-upsell--selected .strap-upsell__price, .desktop-strap-slider .strap-upsell--selected .strap-upsell__status, .desktop-strap-slider .strap-upsell--selected .strap-upsell__description, .desktop-strap-slider .strap-upsell--selected .strap-upsell__price {
+  color: #51c96d !important;
+}
+
+.desktop-strap-slider .strap-upsell__description {
+  white-space: nowrap;
+}
+
+.mobile-strap-slider .strap-upsell__description, .desktop-strap-slider .strap-upsell__description {
+  padding: 2px 0 2px;
+  font-size: 12px;
+}
+
+.strap-upsell--selected .strap-upsell__description {
+  color: #51c96d;
+}
+@media only screen and (min-width: 768px)
+
+  .strap-upsell__description {
+    font-size: 11px;
+    padding: 2px 0 2px;
+  }
+
+.strap-upsell__description {
+  margin: auto;
+  color: #929292;
+  padding: 14px 0;
+  margin-bottom: 0;
+  text-transform: capitalize;
+  line-height: 1.2;
+  font-family: "futura-pt",arial,sans-serif;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.strap-upsell__status {
+  display: none;
+  line-height: 1;
+  color: #51c96d;
+  text-transform: uppercase;
+}
+.strap-checkbox {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0 auto;
+  margin-top: 0px;
+  border: 2px solid #000;
+  background-color: #fff;
+  background: url("//cdn.shopify.com/s/files/1/0377/2037/t/37/assets/white-checkmark.svg?17850010510198406860");
+  background-repeat: repeat;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  background-size: auto auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin-top: 8px;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+
+.strap-upsell {
+  cursor: pointer;
+}
+.strap-upsell {
+  text-align: center;
+}
+
+.mobile-strap-slider .strap-upsell--selected .strap-checkbox, .desktop-strap-slider .strap-upsell--selected .strap-checkbox {
+  background-color: #51c96d;
+  border-color: #51c96d;
+}
+_product-strap.scss:61.desktop-strap-slider .strap-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.mobile-strap-slider .strap-checkbox, .desktop-strap-slider .strap-checkbox {
+  border-radius: 35px;
+  width: 28px;
+  height: 28px;
+  background-size: auto;
+}
+
+.strap-checkbox {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0 auto;
+  border: 2px solid #000;
+  background-color: #fff;
+  background: url(//cdn.shopify.com/s/files/1/0377/2037/t/37/assets/white-checkmark.svg?1785001â€¦);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  margin-top: 8px;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+_global.scss:4
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+_normalize.scss:12
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+Inherited from div
+_global.scss:126
+div {
+  font-family: "futura-pt",arial,sans-serif;
+  letter-spacing: 1.5px;
+}
+Inherited from div.strap-upsell.js-add-upsell-item.slick-slide.slick-current.slick-active.strap-upsell--selected
+_mixins.scss:10
+.mobile-strap-slider .strap-upsell--selected, .desktop-strap-slider .strap-upsell--selected {
+  color: #51c96d;
+}
+@media only screen and (min-width: 768px)
+  _product.scss:918
+  .strap-upsell {
+    width: 32%;
+    margin-right: 2%;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+_product.scss:867
+.strap-upsell {
+  text-align: center;
+  position: relative;
+}
+_global.scss:126
+div {
+  font-family: "futura-pt",arial,sans-serif;
+  letter-spacing: 1.5px;
+}
+Inherited from div.slick-track
+_global.scss:126
+div {
+  font-family: "futura-pt",arial,sans-serif;
+  letter-spacing: 1.5px;
+}
+Inherited from div.slick-list.draggable
+_global.scss:126
+div {
+  font-family: "futura-pt",arial,sans-serif;
+  letter-spacing: 1.5px;
+}
+Inherited from div.desktop-strap-slider.strap-grid.slick-initialized.slick-slider
+vendor.css?8417â€¦703600259070:1
+.slick-slider {
+  position: relative;
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}  

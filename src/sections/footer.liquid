@@ -1,0 +1,224 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div class="footer-section" data-section-id="{{ section.id }}" data-section-type="footer-section">
+{% comment %}
+  {% include 'shipping-detail'%}
+  {% endcomment %}
+  {% if section.settings.show_signup_bar %}
+  <div id="newsletter">
+    <div class="row">
+      <div class="klaviyo-form-JAMSvE"></div>
+      {% include 'klaviyo-newsletter' %}
+      {% comment %}
+      {% include 'mailing' %}
+      {% endcomment %}
+    </div>
+  </div>
+  {% endif %}
+
+<footer>
+  <div class="row">
+    {% case section.blocks.size %}
+    {% when 0 %}
+    {% when 1 %}
+    {% assign column_width = 'desktop-12 tablet-6 mobile-3' %}
+    {% when 2 %}
+    {% assign column_width = 'desktop-6 tablet-6 mobile-3' %}
+    {% when 3 %}
+    {% assign column_width = 'desktop-4 tablet-6 mobile-3' %}
+    {% when 4 %}
+    {% assign column_width = 'desktop-3 tablet-6 mobile-3' %}
+    {% endcase %}
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'menu' %}
+    <div class="{{ column_width }}">
+      <div class="section-title">
+        <h4>{{ block.settings.title | escape }}</h4>
+      </div>
+      <ul {{ block.shopify_attributes }}>
+        {% for link in linklists[block.settings.footer_nav].links %}
+        <li>{% comment %}ly_code_replace_for_[ link.title | link_to: link.url ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation | link_to: link.url }}{% comment %}ly_code_replace_end{% endcomment %}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% when 'blog' %}
+    <div class="{{ column_width }}">
+      <div class="section-title">
+        <h4>{{ block.settings.title | escape }}</h4>
+      </div>
+      <ul>
+        {% for article in blogs[block.settings.footer_blog].articles limit: block.settings.post_limit %}
+        <li><a href="{{ article.url }}">{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% when 'text' %}
+    <div class="{{ column_width }}">
+      <div class="section-title">
+        <h4>{{ block.settings.title | escape }}</h4>
+      </div>
+      {{ block.settings.footer_text }}
+    </div>
+    {% endcase %}
+    {% endfor %}
+  </div>
+  <div class="clear"></div>
+  <div class="sub-footer row">
+    <div class="desktop-6 tablet-3 mobile-3 left-side">
+    <ly-as-9405308>© 2019 Pigtou | SAY NO TO BOREDOM! |</ly-as-9405308>
+    </div>
+    <div class="desktop-6 tablet-3 mobile-3 right-side">
+      {% for type in shop.enabled_payment_types %}
+      <img class="lazyload" data-src="{{ type | payment_type_img_url }}" />
+      {% endfor %}
+    </div>
+  </div>
+
+</footer>
+
+</div>
+<script>
+  jQuery(document).ready(function() {
+    function close_accordion_section() {
+      jQuery('.section-title').removeClass('active');
+      jQuery('.section-title').next('ul').slideUp(300).removeClass('open');
+    }
+    jQuery('.section-title').click(function(e) {
+      var currentAttrValue = jQuery(this).attr('href');
+      if (jQuery(this).is('.active')) {
+        close_accordion_section();
+      } else {
+        close_accordion_section();
+        jQuery(this).addClass('active');
+        jQuery(this).next('ul').slideDown(300).addClass('open');
+      }
+      e.preventDefault();
+    });
+  });
+</script>
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 4,
+  "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_signup_bar",
+        "label": "Show email signup bar"
+      }
+  ],
+  "blocks":[
+    {
+      "type":"menu",
+      "name":"Menu",
+      "settings":[
+        {
+          "type": "link_list",
+          "id": "footer_nav",
+          "label": "Choose a menu",
+          "info":"This menu won't show dropdown items"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Menu title",
+          "default": "Explore"
+        }
+      ]
+    },
+    {
+      "type":"blog",
+      "name":"Blog",
+      "limit": 1,
+      "settings":[
+        {
+          "id": "footer_blog",
+          "type": "blog",
+          "label": "Blog"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Blog title",
+          "default": "Recent posts"
+        },
+        {
+          "type": "select",
+          "id": "post_limit",
+          "label": "Posts",
+          "default": "3",
+          "options": [
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "6",
+              "label": "6"
+            },
+            {
+              "value": "9",
+              "label": "9"
+            },
+            {
+              "value": "12",
+              "label": "12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings":[
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Text title",
+          "default": "About"
+        },
+      {
+          "id": "footer_text",
+          "type": "richtext",
+          "label": "Text",
+          "default": "<p>Add some text to your footer.</p>"
+       }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<script type='application/ld+json'> 
+{
+  "@context": "http://www.schema.org",
+  "@type": "Store",
+  "name": "fathom bracelets",
+  "url": "https://fathombracelets.com/",
+    "priceRange": "20 - 100",
+      "telephone": "00000000000",
+  "sameAs": [
+    "https://www.facebook.com/fathombracelets",
+    "https://uk.pinterest.com/fathombracelets/fathom-braided-leather-bracelets/",
+    "https://instagram.com/fathombracelets",
+    ""
+  ],
+  "logo": "https://cdn.shopify.com/s/files/1/1269/9531/files/Untitled-2_copy_42f66ee2-de39-4987-8010-3e3ed5b2787f_600x.jpg?v=1517858469",
+  "image": "https://cdn.shopify.com/s/files/1/1269/9531/files/Untitled-2_copy_42f66ee2-de39-4987-8010-3e3ed5b2787f_600x.jpg?v=1517858469",
+  "description": "A long time ago, my partner and I came up with the idea of creating wristbands that tell a story. Inspired by sea, we designed bracelets that portray the feelings, inspiration and emotions we have when sailing.\n           \nSailing forges a connection, elegance in its simplicity, with a rolling past forever each moment. We tried to create a bracelet which reflects these feelings and characteristics.\nAs a key inspiration we have chosen paracord and thimble, which are sailing attributes. We spent a lot of time creating the thimble design, as we wanted to create something unique, that you haven't seen before.\nWe have created an abstract idea of the sea, not literal, but very hidden – and even our name 'Fathom' means '6 feet', a sailing attribute. And, you may notice the names of our bracelets are related to the world’s busiest sailing ports.\n \n\nWe decided to use different materials and thimble colours, so every person can find exactly what he likes and what reflects his personality the most. We use only high quality materials, and our leather and suede cord looks even better with time.\nWe also wanted to make them very stylish as well as very conceptual, and I believe our bracelets have an amazing combination of style and concept. ",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Svendubres 9,",
+    "addressLocality": " Vilnius",
+    "addressRegion": "Lithuania",
+    "postalCode": " 11105",
+    "addressCountry": "Lithuania"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "54.702507",
+    "longitude": " 25.401581"
+  },
+  "hasMap": "https://goo.gl/maps/C2BXVpE83uv"
+}
+ </script>

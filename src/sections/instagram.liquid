@@ -1,0 +1,63 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<script id="instagram-template" type="text/template">
+  {% raw %}
+    <div class="all-fifth">
+      <a class="instagram-image-container" target="_blank" href="{{link}}" rel="ig" title="{{caption}}">
+        <img class="instagram-image lazyload" data-src="{{image}}" />
+      </a>
+    </div>
+  {% endraw %}
+</script>
+
+<div class="homepage-section no-fouc index-section instagram-feed" data-section-id="{{ section.id }}" data-section-type="instagram">
+  <section id="index-social" class="row">
+    {% if section.settings.title != blank %}
+    <h2 class="desktop-12 mobile-3">{{ section.settings.title | escape }}</h2>
+    {% endif %}
+    <div class="clear"></div>
+
+    {% assign token = section.settings.instagram-access-token %}
+    {% capture userid %}
+    {{ token | truncate: 9, "" }}
+    {% endcapture %}
+
+    <div class="instagram-user-feed">
+
+      {% if section.settings.instagram-access-token != blank %}
+      <div id="instafeed-{{ section.id }}" data-access-token="{{ token }}"></div>
+      {% else %}
+
+      {% include 'onboard-instagram' %}
+      {% endif %}
+
+    </div>
+  </section>
+</div>
+
+
+{% schema %}
+{
+	"name": "Instagram feed",
+	"settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Follow us on Instagram"
+    },
+
+      {
+          "type": "textarea",
+          "id": "instagram-access-token",
+          "label": "Instagram access token",
+      	  "info": "Required for permission to show your Instagram content [instructions here](http://support.undergroundmedia.co.uk/customer/en/portal/articles/2386318-home-page---instagram-feed) for setup."
+      }
+  ],
+  "presets": [
+    {
+      "name": "Instagram feed",
+      "category": "Social media"
+    }
+  ]
+}
+{% endschema %}

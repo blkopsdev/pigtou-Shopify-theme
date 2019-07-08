@@ -1,0 +1,136 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div class="homepage-section no-fouc index-section featured-product-section" data-section-id="{{ section.id }}" data-section-type="homepage-products">
+  {% assign collection = collections[section.settings.homepage-collection] %}
+  {% assign prod_limit = section.settings.homepage-product-limit %}
+  <div class="row">  
+    {% if section.settings.title != blank %}
+    <h2 class="desktop-12 tablet-6 mobile-3">
+<!--       <a href="#"> -->
+        {{ section.settings.title | escape }}
+<!--       </a> -->
+    </h2> 
+    {% endif %}
+    <div class="clear"></div>
+    {% if section.settings.homepage-product-display == 'grid' %}
+    
+    <div class="product-loop">
+      {% if collection != blank %}
+      {% for product in collection.products limit: prod_limit %}
+      {% assign products-per-row = section.settings.products-per-row %}
+      <div class="product-index {% if products-per-row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products-per-row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products-per-row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products-per-row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products-per-row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-2 mobile-half" data-alpha="{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-price="{{ product.price }}">       
+        {% include 'product-listing-index' %}
+      </div>   
+      {% endfor %}
+      {% else %}
+      {% include 'onboard-product' %}
+      {% endif %}
+    </div>     
+
+    {% elsif section.settings.homepage-product-display == 'carousel' %}
+    {% include 'product-carousel' with collection %}
+    {% endif %}
+  </div>  
+</div>
+<style>
+  {% if section.settings.homepage-product-display == 'grid' %}
+  .product-car { margin: 0; }
+  {% endif %}
+
+  {% if section.settings.zoom_func  %}  
+.prod-container{
+	overflow:hidden;
+}
+
+.prod-image{
+    max-width: 100%;
+    -webkit-transition: margin .1s ease, transform .25s ease;
+    -moz-transition: margin .1s ease, transform .25s ease;
+    -o-transition: margin .1s ease, transform .25s ease;
+    transition: margin .1s ease, transform .25s ease;
+}
+
+.prod-image:hover img{
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+    /* max-width: 100%; */
+    -webkit-transition: margin .1s ease, transform .25s ease;
+    -moz-transition: margin .1s ease, transform .25s ease;
+    -o-transition: margin .1s ease, transform .25s ease;
+    transition: margin .1s ease, transform .25s ease;
+
+}
+  
+  {% endif %}
+</style>
+{% schema %}
+
+
+
+{
+  "name": "Featured products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured products"
+    },
+	{
+		"type":"checkbox",
+		"id":"zoom_func",
+		"label":"Enable Zoom funcationality",
+		"default":true
+	},
+      {
+        "type": "collection",
+        "id": "homepage-collection",
+        "label": "Choose a collection"
+      },
+      {
+        "type": "range",
+        "id": "homepage-product-limit",
+        "min": 2,
+        "max": 30,
+        "step": 1,
+        "label": "How many products",
+        "default": 12
+      },
+      
+      {
+        "type": "select",
+        "id": "homepage-product-display",
+        "label": "Product layout",
+		"default":"carousel",
+        "options": [
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "carousel",
+            "label": "Carousel"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "products-per-row",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "label": "Products per row",
+		"info": "Grid use only",
+        "default": 4
+      }      
+    ],
+  "presets": [
+    {
+      "name": "Featured products",
+      "category": "Collections"
+    }
+  ]
+  }
+{% endschema %}

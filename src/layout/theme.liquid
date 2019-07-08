@@ -1,0 +1,151 @@
+{%- if request.host contains 'myshopify.com' -%}
+	{%- assign is_admin_interface = true -%}
+{%- else -%}
+	{%- assign is_admin_interface = false -%}
+{%- endif -%}
+
+{%- if template.name == 'cart' -%}
+	{%- assign is_admin_interface = true -%}
+{%- endif -%}
+
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+{% comment %}ly_static_code_begin{% endcomment %}{% capture ly_content %}{% comment %}ly_static_code_end{% endcomment %}
+
+<!DOCTYPE html>
+	<!--[if lt IE 7 ]><html class="ie ie6" lang="en"{% comment %}ly_dir_replace_for_[]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% if shop.metafields.languages_dir[language] == 'rtl' %} dir="rtl" {% endif %}{% comment %}ly_dir_replace_end{% endcomment %}> <![endif]-->
+	<!--[if IE 7 ]><html class="ie ie7" lang="en"{% comment %}ly_dir_replace_for_[]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% if shop.metafields.languages_dir[language] == 'rtl' %} dir="rtl" {% endif %}{% comment %}ly_dir_replace_end{% endcomment %}> <![endif]-->
+	<!--[if IE 8 ]><html class="ie ie8" lang="en"{% comment %}ly_dir_replace_for_[]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% if shop.metafields.languages_dir[language] == 'rtl' %} dir="rtl" {% endif %}{% comment %}ly_dir_replace_end{% endcomment %}> <![endif]-->
+	<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"{% comment %}ly_dir_replace_for_[]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% if shop.metafields.languages_dir[language] == 'rtl' %} dir="rtl" {% endif %}{% comment %}ly_dir_replace_end{% endcomment %}> <!--<![endif]-->
+	<head>
+		{% include '__opt-css-theme' %}
+		{% include '__opt-js-jquery' %}
+		{% include '__opt-js-slick' %}
+
+		<script>/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */!function(e){"use strict";var t=function(t,n,r){function o(e){return i.body?e():void setTimeout(function(){o(e)})}function a(){d.addEventListener&&d.removeEventListener("load",a),d.media=r||"all"}var l,i=e.document,d=i.createElement("link");if(n)l=n;else{var s=(i.body||i.getElementsByTagName("head")[0]).childNodes;l=s[s.length-1]}var u=i.styleSheets;d.rel="stylesheet",d.href=t,d.media="only x",o(function(){l.parentNode.insertBefore(d,n?l:l.nextSibling)});var f=function(e){for(var t=d.href,n=u.length;n--;)if(u[n].href===t)return e();setTimeout(function(){f(e)})};return d.addEventListener&&d.addEventListener("load",a),d.onloadcssdefined=f,f(a),d};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this),function(e){if(e.loadCSS){var t=loadCSS.relpreload={};if(t.support=function(){try{return e.document.createElement("link").relList.supports("preload")}catch(t){return!1}},t.poly=function(){for(var t=e.document.getElementsByTagName("link"),n=0;n<t.length;n++){var r=t[n];"preload"===r.rel&&"style"===r.getAttribute("as")&&(e.loadCSS(r.href,r,r.getAttribute("media")),r.rel=null)}},!t.support()){t.poly();var n=e.setInterval(t.poly,300);e.addEventListener&&e.addEventListener("load",function(){t.poly(),e.clearInterval(n)}),e.attachEvent&&e.attachEvent("onload",function(){e.clearInterval(n)})}}}(this);</script>
+		<script>!function(e){"use strict";var n=function(n,t,o){var l,r=e.document,i=r.createElement("link");if(t)l=t;else{var a=(r.body||r.getElementsByTagName("head")[0]).childNodes;l=a[a.length-1]}var d=r.styleSheets;i.rel="stylesheet",i.href=n,i.media="only x",l.parentNode.insertBefore(i,t?l:l.nextSibling);var f=function(e){for(var n=i.href,t=d.length;t--;)if(d[t].href===n)return e();setTimeout(function(){f(e)})};return i.onloadcssdefined=f,f(function(){i.media=o||"all"}),i};"undefined"!=typeof module?module.exports=n:e.loadCSS=n}("undefined"!=typeof global?global:this);</script>
+		<script>!function(e){var t=function(t,o,n){"use strict";var r,a=e.document.getElementsByTagName("script")[0],c=e.document.createElement("script");return"boolean"==typeof o&&(r=n,n=o,o=r),c.src=t,c.async=!n,a.parentNode.insertBefore(c,a),o&&"function"==typeof o&&(c.onload=o),c};"undefined"!=typeof module?module.exports=t:e.loadJS=t}("undefined"!=typeof global?global:this);</script>  
+		<meta name="google-site-verification" content="nhdC-O5M3r4MH96tddRuDuRJM8CAzgA0GIlIHl8md70" />
+
+		<meta charset="utf-8" />
+
+		<!-- Add any tracking or verification meta content below this line -->
+		<!-- Facebook or Google Analytics tracking should be placed in your Online store > <ly-as-9405283>Preferences and not your theme --></ly-as-9405283>
+
+		<!-- Meta content
+		================================================== -->
+
+		<title>
+			{{ langify_title }}{% if current_tags %} <ly-as-10096452>– tagged "</ly-as-10096452>{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} <ly-as-10096453>– Page</ly-as-10096453> {{ current_page }}{% endif %}{% unless langify_title contains langify_shop_name %} – {{ langify_shop_name }}{% endunless %}
+		</title>
+		{% if langify_description %}
+			<meta name="description" content="{{ langify_description | escape }}" />
+			<meta name="google-site-verification" content="Nk3pnyclR0t6QY4s1xYr0t6V56FCdJyZt0foUDyvKCU" />
+			<meta name="msvalidate.01" content="A30232532E6E0557E65424D8FB9F3205" />
+			<meta name="yandex-verification" content="951e46baa91dd24f" />
+			<meta name="geo.region" content="LT-VL" />
+			<meta name="geo.placename" content="Vilnius" />
+			<meta name="geo.position" content="54.702461;25.40156" />
+			<meta name="ICBM" content="54.702461, 25.40156" />
+		{% endif %}
+		<link rel="canonical" href="{{ canonical_url }}" />
+
+		{% include 'social-media-meta-tags' %}
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+		<!-- Favicons
+		================================================== -->
+
+		<link rel="shortcut icon" href="{% comment %}ly_asset_replace_for_[ 'favicon.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'favicon.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}">
+
+		{% comment %} {{ shop.metafields.loox["global_html_head"] }}  {% endcomment %}
+
+
+		{%- if is_admin_interface -%}
+			{{ content_for_header }}	
+		{%- else -%}
+			{% comment %} js-content-for-header.liquid is prepare Kernel's scripts to new method {% endcomment %}
+			{% include '__opt-js-content-for-header' %}
+
+			{% comment %} First part of the Kernel's scripts {% endcomment %}
+			<!-- START MAIN PART OF THE SCRIPTS -->
+			{{ js_content_for_header }}
+			<!-- END MAIN PART OF THE SCRIPTS -->
+		{%- endif -%}
+  
+  <meta name="p:domain_verify" content="b4280707f46d4e89b46849486f2f6869"/>
+
+	</head>
+
+	<body class="gridlock shifter-left shifter {% if template contains 'product' %}product{% elsif template contains 'collection' %}collection{% else %}{{ template }}{% endif %} pg-{{page.handle}}">
+		
+		{% include '__opt-nprogress' %}
+
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N89VQM7"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+
+		<div class="loader" id="__loader">
+			<div>&nbsp;</div>
+		</div>
+
+		<div id="__preloader" class="opacity">
+		
+		{% section 'mobile-navigation' %}
+		
+			<div class="shifter-page{% if settings.ajax_cart_method == 'drawer' %} is-moved-by-drawer{% endif %}" id="PageContainer">
+				<div id="cst-overlay"></div>
+				<div class="page-wrap">
+					{% section 'header' %}
+					<div class="clear"></div>
+					{% if template contains 'collection' %}
+					{% if collection.description contains '[banner]' %}
+					{% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
+					{% capture alt %}{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}{% endcapture %}
+					<div class="collection-banner">
+						<img src="{{ banner | file_url }}" alt="{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">
+					</div>
+					{% endif %}
+					{% endif %}
+
+
+					{% if template == 'index' or template contains 'blog' or template contains 'list-collections' %}
+					{{ content_for_layout }}
+					{% else %}
+					<div id="content" class="row">
+						{{ content_for_layout }}
+					</div>
+					{% endif %}
+				</div>  <!-- close the page-wrap class -->
+				{% section 'footer' %}
+			</div> <!-- close the shifter-page class -->
+
+			<!-- <a href="#" class="scrollup"><i class="icon-chevron-up icon-2x"></i></a> -->
+
+
+
+			<!-- Add any additional scripts below this line -->
+			{% include 'back-to-the-top' %}
+			<div id="zoomDivPro"></div>
+
+		</div>
+
+		{%- if is_admin_interface == false -%}
+			{% comment %} Second part of the Kernel's scripts {% endcomment %}
+			<!-- START DEFER PART OF THE SCRIPTS -->
+			{% comment %} {{ js_content_for_header_defer | strip_newlines }} {% endcomment %}
+			<!-- END DEFER PART OF THE SCRIPTS -->
+		{%- endif -%}
+
+		
+		{% include '__opt-js-theme' %}	
+		
+	
+	{% comment %} {{ shop.metafields.loox["global_html_body"] }} {% endcomment %}
+      
+     {{ "custom_script.js"  | asset_url | script_tag }}
+</body>
+</html>
+{% comment %}ly_static_code_begin{% endcomment %}{% endcapture %}{% include 'ly-static' with ly_content %}{% comment %}ly_static_code_end{% endcomment %}

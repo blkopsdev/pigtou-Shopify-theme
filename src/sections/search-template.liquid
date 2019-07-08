@@ -1,0 +1,177 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div id="page" class="desktop-12 tablet-6 mobile-3">
+   <h2><ly-as-9405371>SEARCH RESULTS</ly-as-9405371></h2>
+
+  {% case section.settings.grid %}
+  {% when 2 %}
+  {%- assign grid_item_width = 'desktop-6 tablet-3 mobile-half' -%}    
+  {% when 3 %}
+  {%- assign grid_item_width = 'desktop-4 tablet-2 mobile-half' -%}
+  {% when 4 %}
+  {%- assign grid_item_width = 'desktop-3 tablet-2 mobile-half' -%}
+  {% endcase %} 
+
+  {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}   
+  {% paginate search.results by product_limit %} 
+
+  <div id="search-bar" class="desktop-12 mobile-3">
+    <form action="/search" method="get">
+      <input type="text" name="q" id="q" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.search.placeholder' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.placeholder' | t }}{% endcapture %}{% include 'ly-static-string' with '9405372' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" />
+     
+      <input id="search_submit" type="submit" border="0" value="">
+    </form>
+  </div>
+  
+  
+
+  {% if search.performed %}
+
+<div class="desktop-12 tablet-6 mobile-3">
+  <div id="product-loop">
+    {% for item in search.results %} 
+    {% assign products-per-row = section.settings.products-per-row %}
+
+    <div id="product-{{ item.id }}" class="product-index {{ grid_item_width }}" data-alpha="{% comment %}ly_code_replace_for_[ item.title ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-price="{{ item.price }}">           
+      <div class="product-index-inner">    
+
+        {% if item.object_type == 'article' %}
+        <!--'item' is an article All article object properties can be accessed. -->
+        {% if item.image %}
+        <div class="prod-image">
+          <a href="{{ item.url }}" title="{% comment %}ly_code_replace_for_[ item.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+						{%- assign load_img_src = item.image | img_url: '10x', format: 'pjpg' -%}
+						{% comment %} {%- assign load_img_src = item.image | img_url: 'grande' -%} {% endcomment %}
+						{%- assign load_img_class = '' -%}
+						<img
+						{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+						alt="ly_code_replace_for_[ item.title ]_begin{% include 'ly-title' with item %}{{ ly_translation }}ly_code_replace_end"
+						/>            
+						
+						{% comment %} <img src="{{ item.image | img_url: 'grande' }}" alt="ly_code_replace_for_[ item.title ]_begin{% include 'ly-title' with item %}{{ ly_translation }}ly_code_replace_end"> {% endcomment %}
+          </a>
+        </div>
+        {% else %}
+        <div class="search-content prod-image">
+          {% comment %}ly_code_replace_for_[ item.content | strip_html | trancate: 200 ]_begin{% endcomment %}{% include 'ly-content' with item %}{{ ly_translation | strip_html | trancate: 200 }}{% comment %}ly_code_replace_end{% endcomment %}
+        </div>
+        {% endif %}
+        {% elsif item.object_type == 'page' %}
+
+
+        <!--'item' is a page. All page object properties can be accessed. -->
+
+        {% if item.content contains "img" %}
+        {% assign feat_image = item.content | split: 'src="' %}
+        {% assign feat_image = feat_image[1] | split: '"' | first | replace: '//cdn', 'http://cdn' | replace: 'http:http://', 'http://' | remove: 'https:'  %}
+        <div class="prod-image">
+          <a href="{{ item.url }}" title="{% comment %}ly_code_replace_for_[ item.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+            <img class="lazyload" data-src="{{ feat_image }}" alt="ly_code_replace_for_[ item.title ]_begin{% include 'ly-title' with item %}{{ ly_translation }}ly_code_replace_end">
+          </a>
+        </div>
+        {% else %}
+        <div class="search-content prod-image">
+          {% comment %}ly_code_replace_for_[ item.content | strip_html | trancate: 200 ]_begin{% endcomment %}{% include 'ly-content' with item %}{{ ly_translation | strip_html | trancate: 200 }}{% comment %}ly_code_replace_end{% endcomment %}
+        </div>
+        {% endif %}
+
+        {% else %}
+        <!-- 'item' is a product. All product object properties can be accessed.-->
+        {% if item.available %}
+        {% for col in item.collections %}
+        {% if col.handle == 'new' %}
+        <div class="new icn">{% comment %}ly_i18n_replace_for_[ 'products.general.new' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.new' | t }}{% endcapture %}{% include 'ly-static-string' with '9405373' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+        {% endif %}
+        {% endfor %}        
+        {% if item.price < item.compare_at_price %}
+        <div class="sale-item icn">{% comment %}ly_i18n_replace_for_[ 'products.general.sale' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.sale' | t }}{% endcapture %}{% include 'ly-static-string' with '9405374' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+        {% endif %}
+        {% else %}
+        <div class="so icn">{% comment %}ly_i18n_replace_for_[ 'products.general.sold' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.sold' | t }}{% endcapture %}{% include 'ly-static-string' with '9405375' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+        {% endif %}  
+        {% if item.template_suffix == 'pre-order' %}
+        <div class="pre-order icn">{% comment %}ly_i18n_replace_for_[ 'products.product.pre_order' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.pre_order' | t }}{% endcapture %}{% include 'ly-static-string' with '9405376' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+        {% endif %}
+        
+        
+        <div class="prod-image">
+          <a href="{{ item.url }}" title="{% comment %}ly_code_replace_for_[ item.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+            {{ item.featured_image | img_url: 'grande' | img_tag: item.featured_image.alt }}
+          </a>
+        </div>
+        {% endif %} 
+
+      </div> <!-- Close product-index-inner class -->
+
+
+      <div class="product-info"> 
+        <div class="product-info-inner">
+          <a href="{{ item.url }}"> 
+            {% if item.object_type == 'product' %} {% if settings.vendor %}<h4>{% comment %}ly_code_replace_for_[ item.vendor ]_begin{% endcomment %}{% include 'ly-vendor' with item %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h4>{% endif %} {% endif %}
+            <h3>{% comment %}ly_code_replace_for_[ item.title ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h3>
+          </a>        
+          {% if item.object_type == 'product' %}
+          <div class="price">
+            {% if item.price < item.compare_at_price %}
+            <div class="onsale">{{ item.price | money }}</div>
+            <div class="was">{{ item.compare_at_price | money }}</div>
+            {% else %}
+            <div class="prod-price">{% if item.price_varies %} {{ 'products.general.from' | t }} {{ item.price_min | money }} - {{ item.price_max | money }} {% else %}{{ item.price | money }}{% endif %}</div>
+            {% endif %}	
+          </div>
+          {% if settings.alternate_colors %}
+          <div class="prod-colors">
+            {% include 'product-listing-swatches' %}
+          </div> 
+          {% endif %} 
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+  
+  {% if search.performed %}
+      {% if search.results_count > 0 %}
+  {% else %}
+            {% if search.terms != empty %}
+                <h4 class="no-results">{% comment %}ly_i18n_replace_for_[ 'general.search.no_results_html' | t: terms: search.terms  ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.no_results_html' | t: terms: search.terms  }}{% endcapture %}{% include 'ly-static-string' with '9405378' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = search.terms   %}{% assign ly_template = ly_template | replace: '[[terms]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h4>
+            {% else %}
+                <h4 class="no-results">{{ 'general.search.first_search' | t }}</h4>
+            {% endif %}
+        {% endif %}
+   {% endif %}
+  
+  {% include 'pagination' %}
+
+  {% endif %}
+
+  {% endpaginate %}
+</div>
+
+{% schema %}
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "range",
+        "id": "grid",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "label": "Items per row",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "rows",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "Rows",
+        "default": 4
+      }  
+  ]
+}
+{% endschema %}

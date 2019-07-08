@@ -1,0 +1,6 @@
+{% comment %}ly_global_begin{% endcomment %}
+{% include 'ly-global' %}
+{% comment %}ly_global_end{% endcomment %}
+  {% section 'product-template' %} 
+	<div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">
+      {% comment %}ly_code_replace_for_[ product.metafields.loox.reviews ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>

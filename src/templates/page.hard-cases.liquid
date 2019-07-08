@@ -1,0 +1,207 @@
+{% comment %}ly_global_begin
+{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div id="page" class="desktop-12 tablet-6 mobile-3 cases" data-section-id="{{ section.id }}">
+  <h1 class="text-center">{% comment %}ly_code_replace_for_[ page.title ]_begin{% endcomment %}
+    {% include 'ly-title' with page %}{{ ly_translation }}
+    {% comment %}ly_code_replace_end{% endcomment %}</h1>
+  <div class="subline"> <ly-as-10142788>Select your device</ly-as-10142788> </div>
+  {% comment %}ly_code_replace_for_[ page.content ]_begin{% endcomment %}
+  {% include 'ly-content' with page %}{{ ly_translation }}
+  {% comment %}ly_code_replace_end{% endcomment %}
+
+
+  {% comment %}Get page handle{% endcomment %}
+<a id="btmm" class="btn1 vink-b" href="{{shop.url}}">« back</a> 
+
+</div>
+<div class="twmplate--width lap-pho-case">
+
+  {% for link in linklists['hard-cases-1'].links %} 
+
+  {% assign sub_collection = link.object %}
+
+
+  <div  class="product-index desktop-3 tablet-2" data-alpha="BLACK MARBLE Iphone/ Ipod vinyl skin" data-price="1490">
+
+    <div  class="device" class="prod-container"> 
+
+      <div class="prod-image">
+
+        <a href="javascript:void(0)" data-page="{{page.url}}" class="template--link" data-colink="{{sub_collection.handle}}" title=" {{ sub_collection.title }}">
+          <div class="reveal">
+            {% comment %}sub_collection.image{% endcomment %}
+            {% if sub_collection.image != blank  %}
+						{%- assign load_img_src = sub_collection.image | img_url: '10x', format: 'pjpg' -%}
+						{% comment %} {%- assign load_img_src = sub_collection.image | img_url: 'large' -%} {% endcomment %}
+						{%- assign load_img_class = '' -%}
+						<img
+						{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+						alt="<ly-as-10142789>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142789>" 
+						/>						
+            {% comment %} <img src="{{ sub_collection.image | img_url: 'large' }}" alt="<ly-as-10142789>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142789>"> {% endcomment %}
+            {% else %}
+						{%- assign load_img_src = link.object.products.first.featured_image | img_url: '10x', format: 'pjpg' -%}
+						{% comment %} {%- assign load_img_src = link.object.products.first.featured_image | img_url: 'large' -%} {% endcomment %}
+						{%- assign load_img_class = '' -%}
+						<img
+						{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+						alt="<ly-as-10142789>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142789>" 
+						/>						
+            {% comment %} <img src="{{ link.object.products.first.featured_image | img_url: 'large' }}" alt="<ly-as-10142789>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142789>"> {% endcomment %}
+            {% endif %}
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="product-info"> 
+      <a href="javascript:void(0)" class="template--link" data-colink="{{sub_collection.handle}}" title=" {{ sub_collection.title }}">
+
+        <h2> {{ sub_collection.title }}</h2>
+      </a>
+    </div> 
+  </div>
+
+  {% endfor %}
+</div>
+{% endcomment %}
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<!-- <div id="page" class="desktop-12 tablet-6 mobile-3 cases" data-section-id="{{ section.id }}">
+<h1 class="text-center">{% comment %}ly_code_replace_for_[ page.title ]_begin{% endcomment %}{% include 'ly-title' with page %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+<div class="subline"> <ly-as-10142790>Select your device</ly-as-10142790> </div>
+{% comment %}ly_code_replace_for_[ page.content ]_begin{% endcomment %}{% include 'ly-content' with page %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+</div> -->
+ 
+<div id="page" class="desktop-12 tablet-6 mobile-3 cases" data-section-id="">
+  <h1 class="text-center">HARD CASES</h1>
+  <div class="subline"> Select your device </div>
+</div>
+
+
+<!-- <a class="btn1 vink-b" href="javascript:void(0)" onclick="history.go(-1)">« back</a> -->
+<a  id="btmm" class="btn1 vink-b" href="{{shop.url}}">« back</a>
+
+<div class="accordion-content-wrapper" style="margin-top:10px;">
+
+  <div class="slide-1">
+
+
+    <div id="next1" class="twmplate--width lap-pho-case">
+
+
+      <!-- {% assign urlll == request.path | split: '=' %}
+<p>{{request.path}} </p>
+-->
+
+      {% for link in linklists['hard-cases-1'].links %}
+
+      {% assign sub_collection = link.object %}
+
+
+      <a class="template--link" data-page="{{page.url}}" data-colink="{{sub_collection.handle}}" href="javascript:void(0)"> 
+        <div class="product-index desktop-3 tablet-2" data-alpha="BLACK MARBLE Iphone/ Ipod vinyl skin" data-price="1490">
+
+          <div class="device"  class="prod-container"> 
+
+            <div class="reveal data">
+              {% comment %}sub_collection.image{% endcomment %}
+              {% if sub_collection.image != blank  %}
+							{%- assign load_img_src = sub_collection.image | img_url: '10x', format: 'pjpg' -%}
+							{% comment %} {%- assign load_img_src = sub_collection.image | img_url: 'large' -%} {% endcomment %}
+							{%- assign load_img_class = '' -%}
+							<img
+							{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+							alt="<ly-as-10142791>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142791>" 
+							/>							
+              {% comment %} <img src="{{ sub_collection.image | img_url: 'large' }}" alt="<ly-as-10142791>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142791>"> {% endcomment %}
+              {% else %}
+							{%- assign load_img_src = link.object.products.first.featured_image | img_url: '10x', format: 'pjpg' -%}
+							{% comment %} {%- assign load_img_src = link.object.products.first.featured_image | img_url: 'large' -%} {% endcomment %}
+							{%- assign load_img_class = '' -%}
+							<img
+							{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+							alt="<ly-as-10142791>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142791>" 
+							/>							
+              {% comment %} <img src="{{ link.object.products.first.featured_image | img_url: 'large' }}" alt="<ly-as-10142791>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142791>"> {% endcomment %}
+              {% endif %}
+            </div>
+
+          </div>
+          <div class="product-info"> 
+
+
+            <h2> {{ sub_collection.title }}</h2>
+
+          </div>
+        </div>
+      </a>
+
+      {% endfor %}</div></div>
+
+  <div class="slide-2 great ">
+
+    {% for link in linklists['hard-cases-1'].links %}
+
+    {% assign sub_collection = link.object %}
+
+    {% if link.links != blank %}
+    <ul class="vendor-ul subbb {{sub_collection.handle}}">
+      {% for child_link in link.links %} 
+      <li class="">
+
+        <a href="{{child_link.url}}" id="next1f" class="slider-lii list-block__card" data-linnkk="https://pigtou.com/collections/vendors?q=Pigtou">
+
+          <div class="li-inner"> 
+            <p class="cus-title" macbook=""> {{link.title | replace: 'cases',' ' }}</p>
+            <h3 class="cus-vendor">{{child_link.title}}</h3>
+            <p class="cus-title cus-sub-tle" skins="">cases</p>
+
+          </div>
+        </a>
+      </li>
+
+      {% endfor %}
+    </ul>
+    {% else %}
+    <ul class="vendor-ul subbb {{sub_collection.handle}}">
+
+      <li class="">
+
+        <a href="https://pigtou.com/pages/hard-cases" id="next1f" class="slider-lii list-block__card" data-linnkk="https://pigtou.com/collections/vendors?q=Pigtou">
+
+          <div class="li-inner"> 
+            <p class="cus-title" macbook=""> {{link.title | replace: 'cases',' ' }}</p>
+            <h3 class="cus-vendor">EMPTY</h3>
+            <p class="cus-title cus-sub-tle" skins=""> cases </p>
+
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    {% endif %}
+    {% endfor %}     
+  </div>
+
+</div>
+
+
+
+
+
+
+{% comment %} <link href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.css" rel="stylesheet"> {% endcomment %}
+{% comment %} <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" rel="stylesheet"> {% endcomment %}
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script> {% endcomment %}
+    <script type="text/javascript">
+  $('.accordion-content-wrapper').slick({
+  prevArrow: $('#btmm'),
+ nextArrow: $('#next1'),
+    infinite: false,
+
+      draggable: false,
+      swipe: false,
+      touchMove: false,
+});
+
+    </script>
+<style>.subbb{display: none;}</style>

@@ -1,0 +1,233 @@
+{% include '__opt-js-theme-init' %}
+
+<script>console.log('__opt-js-theme-dev-6');</script>
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ '__opt_ls.rias.min.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ '__opt_ls.rias.min.js' | asset_url }}"></script><![endif]-->
+
+<!--[if (gt IE 9)|!(IE)]><!--><script src="{{ '__opt_ls.bgset.min.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+<!--[if lte IE 9]><script src="{{ '__opt_ls.bgset.min.js' | asset_url }}"></script><![endif]-->
+
+<script>
+
+(function () {
+	if ( typeof window.CustomEvent === "function" ) return false; //If not IE
+
+	function CustomEvent ( event, params ) {
+		params = params || { bubbles: false, cancelable: false, detail: undefined };
+		var evt = document.createEvent( 'CustomEvent' );
+		evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+		return evt;
+	}
+
+	CustomEvent.prototype = window.Event.prototype;
+
+	window.CustomEvent = CustomEvent;
+})();
+
+var device_mode = false;
+
+loadJS('{{ '__opt_md.js' | asset_url }}', function()
+{
+		var md = new MobileDetect(window.navigator.userAgent);
+		
+		if(md.mobile())
+		{
+			device_mode = 'mobile';
+		}
+		else
+		{
+			device_mode = 'desktop';
+		}
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function(event) 
+{
+	if(device_mode == 'mobile')
+	{
+		document.dispatchEvent(new CustomEvent('MobileContentLoaded'));
+	}
+	else
+	{
+		document.dispatchEvent(new CustomEvent('DesktopContentLoaded'));
+	}
+
+	setTimeout(function(){
+		document.dispatchEvent(new CustomEvent('StartKernelLoading'));
+	}, 8500);		
+
+	setTimeout(function(){
+		document.dispatchEvent(new CustomEvent('StartAsyncLoading'));
+	}, 10500);
+
+});
+
+document.addEventListener("MobileContentLoaded", function(event)
+{
+	setTimeout(function(){
+		document.dispatchEvent(new CustomEvent('StartScriptsLoading'));
+	}, 1700);
+
+});
+
+document.addEventListener("DesktopContentLoaded", function(event)
+{
+	setTimeout(function(){
+		document.dispatchEvent(new CustomEvent('StartScriptsLoading'));
+	}, 200);
+});
+
+
+document.addEventListener("StartScriptsLoading", function(event)
+{
+	$('.no-fouc').removeClass('no-fouc');
+
+	loadJS('{{ 'option_selection.js' | shopify_asset_url }}');
+	loadJS('{{ 'jquery.fs.shifter.js' | asset_url }}');
+	{% comment %}loadJS('//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js');
+	loadJS('{{ 'jquery.products.min.js' | asset_url }}'); {% endcomment %}
+
+	{% if settings.ajax_cart_method == 'drawer' %}
+		loadJS('{{ 'handlebars.min.js' | asset_url }}');
+		loadJS('{{ 'ajax-cart.js' | asset_url }}');
+		loadJS('{{ 'ajaxify.js' | asset_url }}');
+	{% endif %}
+
+	{%- if template.name == 'product' -%}
+		loadJS('//cdn.shopify.com/s/files/1/1371/9405/t/7/assets/jquery.elevatezoom.js?2777040019198797224jquery.elevatezoom.js');
+	{%- endif -%}
+
+	{% if template contains 'index' %}
+		loadJS('{{ 'instafeed.js' | asset_url }}');
+	{% endif %}	
+
+	setTimeout(function(){
+		document.dispatchEvent(new CustomEvent('StartAppLoading'));
+	}, 500);
+
+});
+
+document.addEventListener("StartAppLoading", function(event)
+{
+	loadJS('{{ '__opt_theme.js' | asset_url }}', function()
+	{
+		setTimeout(function(){
+			document.dispatchEvent(new CustomEvent('StartAppInitLoading'));
+			document.dispatchEvent(new CustomEvent('EndNprogress'));
+			$("#__loader").remove();
+			$("#__preloader").css('opacity', 1);
+			loadJS('{{ '__opt_lazysizes.min.js' | asset_url }}');
+		}, 1000);
+
+		setTimeout(function(){
+			document.dispatchEvent(new CustomEvent('StartOtherLoading'));
+		}, 5000);
+
+	});	
+});
+
+
+document.addEventListener("StartOtherLoading", function(event)
+{
+	{% comment %} if (typeof Shopify.resizeImage === 'undefined') {
+		loadJS('{{ 'api.jquery.js' | asset_url }}');
+	} {% endcomment %}
+
+	{% if template contains 'product' %}
+		Shopify.Products.recordRecentlyViewed();
+		$('input, textarea').placeholder();
+	{% endif %}
+
+	loadJS('//cdn.codeblackbelt.com/js/modules/frequently-bought-together/main.min.js?shop=pigtou.myshopify.com');
+});
+
+
+</script>
+
+{% include "trackify" %}
+
+{% include 'timber-cart' %}
+{% include 'popup' %}
+
+{% if settings.ajax_cart_method == 'drawer' %}  
+	<script>
+		document.addEventListener("StartAppLoading", function(event) {
+			ajaxCart.init({
+				formSelector: '#AddToCartForm',
+				cartContainer: '#CartContainer',
+				addToCartSelector: '#AddToCart',
+				cartCountSelector: '.CartCount',
+				cartCostSelector: '.CartCost',
+				moneyFormat: {{ shop.money_format | json }},
+				onToggleCallback: function(cart) {
+
+				}
+			});
+			
+			$("body").on("click", "#cst-button", function(){
+				$(".drawer__close").trigger('click');         
+			}); 
+			$(".shifter-open").on("click", ".mobile-menu-close", function(){
+			});
+
+			jQuery('body').on('ajaxCart.afterCartLoad', function(evt, cart) {
+
+			});
+
+			$('body').on('click', '.template--link',  function(){      
+				var xvf = $(this).attr('data-colink');
+				$('.vendor-ul').hide();
+				$('.subbb.'+xvf).show();
+				setTimeout(function(){ 
+					$('.slick-list').css('height', $('.slick-active').height()+50+'px');  
+					if($('.slide-1').hasClass('slick-active')){
+						$('#btmm').attr('href', '{{shop.url}}');
+					} else {
+						$('#btmm').attr('href', 'javascript:void(0);');
+					} 
+				}, 500);
+				
+				var pageuri = $(this).attr('data-page');
+				$('.btn1').attr('href', pageuri);
+				$('#btmm').attr('href', pageuri);
+				setTimeout(function(){
+					$("html, body").animate({ scrollTop: 0 }, "fast");        
+				}, 500);
+			});
+				
+			$('body').on('click', '#btmm', function(){
+				if($(this).attr('href') == '{{shop.url}}'){
+					window.location.href="{{shop.url}}";  
+				}        
+				setTimeout(function(){ 
+					$('.slick-list').css('height', $('.slick-active').height()+50+'px');  
+					if($('.slide-1').hasClass('slick-active')){
+					$('#btmm').attr('href', '{{shop.url}}');                        
+					}else{
+						$('#btmm').attr('href', 'javascript:void(0);');
+					}        
+				}, 500);
+			});
+
+			$('body').on('click', '.aactive', function(){
+				$('.ttav').removeClass('open-drop');
+				var xfv = $(this).attr('data-idd');
+
+				$('.ttav#'+ xfv).addClass('open-drop');
+				$('.aactive').removeClass('active');
+				$(this).addClass('active');
+			});			
+			
+		});
+	</script>
+
+	
+	{% include 'ajax-cart-template' %}
+
+{% endif %}
+
+{% comment %} {{ shop.metafields.loox["global_html_body"] }} {% endcomment %}
+{% include 'ly-languages' %}

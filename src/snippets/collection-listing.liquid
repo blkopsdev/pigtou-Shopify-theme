@@ -1,0 +1,6 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<div id="product-loop">
+  {% for collection in collections %}
+  {% assign products-per-row = settings.products-per-row %}
+  {% include 'collection-grid-item' %}
+  {% endfor %}
+</div>

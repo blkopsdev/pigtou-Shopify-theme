@@ -1,0 +1,965 @@
+<!-- {% assign imj = collection.image %}
+{% assign iml = imj.alt %} -->
+
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+{% comment %} <script src="//cdn.shopify.com/s/files/1/1371/9405/t/7/assets/jquery.elevatezoom.js?2777040019198797224" type="text/javascript"></script> {% endcomment %}
+{% if product.variants.size > 1 %}
+  <h1 id="variants-collection-view-title" class="text-center" itemprop="name">{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+{% endif %}
+
+{% include 'breadcrumb' %}
+
+{% if product.variants.size > 1 %}
+<div id="variants-collection-view">
+
+  <div class="d-flex flex-wrap variants-collection-view">
+
+    {% assign paginate_limit = 24 %}
+    {% for variant in product.variants %}
+
+      <div class="flex-desktop-3 flex-tablet-2 flex-mobile-half variants-item{% if paginate_limit < forloop.index %} hidden{% endif %}">
+        <div class="item" data-price="{{ variant.price }}" data-variant-id="{{ variant.id }}">
+          <figure>
+            <img src="{{ variant.featured_image | img_url: '800x' }}" alt="">
+          </figure>
+          <h3 class="title">{{ variant.title }}</h3>
+          <div class="price">
+            <div class="prod-price">
+              <span class="money">{{ variant.price | money }}</span>
+            </div>
+          </div>
+          <input type="checkbox" class="chkcls" value="{{ proitem.selected_or_first_available_variant.id}}" data-title="{{ proitem.title }}" data-price="{{ proitem.price }}" tabindex="0">
+        </div>
+      </div>
+
+    {% endfor %}
+
+    {% if paginate_limit < product.variants.size %}
+
+    <div class="pagination row" id="variants-pagination" data-limit="{{ paginate_limit }}">
+      <ul>
+        <li class="pagination-arrow pagination-arrow--previous row desktop-4 tablet-2 mobile-1" data-position="1">
+          <a href="#" class="btn btn--secondary btn--narrow disabled">
+            <i class="fa fa-chevron-left"></i>   
+            <span class="icon__fallback-text">Previous</span>  
+          </a>
+        </li>
+        <li class="pagination-text row desktop-4 tablet-2 mobile-1">
+          <div class="hidden-xs">
+            <span class="page">Page</span>
+            <span class="current-page">1</span>
+            <span class="of">of</span>
+            <span class="pages"></span>
+          </div>
+        </li>
+        <li class="pagination-arrow pagination-arrow--next row desktop-4 tablet-2 mobile-1" data-position="1">
+            <a href="#" class="btn btn--secondary btn--narrow">
+              <span class="icon__fallback-text">Next</span>
+              <i class="fa fa-chevron-right"></i>          
+            </a>
+        </li>
+      </ul>
+    </div>
+
+    {% endif %}
+
+  </div><!--variants-collection-view-->
+</div>
+{% endif %}
+
+
+<div itemscope itemtype="http://schema.org/Product" id="product-{{ product.id }}" data-product-id="{{ product.id }}" class="product-page" data-section-id="{{ section.id }}">
+  {% if product.metafields.loox.num_reviews %}
+  <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+    <meta itemprop="ratingValue" content="{% comment %}ly_code_replace_for_[ product.metafields.loox.avg_rating ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'avg_rating' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.avg_rating  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"/>
+    <meta itemprop="ratingCount" content="{% comment %}ly_code_replace_for_[ product.metafields.loox.num_reviews ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'num_reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.num_reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"/>
+  </div>
+  {% endif %}
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+{% if product.variants.size > 1 %}
+<p id="btmm-w" class="loading">
+  <a id="btmm" class="btn1 vink-b slick-arrow slick-disabled" href="#" aria-disabled="true" style="display: inline;">« back</a>
+</p>
+{% endif %}
+  <div id="mob-product-images" class="{% if product.variants.size > 1 %}loading {% endif %}owl-carousel desktop-hide tablet-3 mobile-3 mobile-3">
+    <div id="thumb-variant">
+      <img src="" alt="">
+    </div>
+    {% for image in product.images limit: 4 %}
+    {% if image.alt contains 'youtube' %}
+    {% elsif image.alt contains 'mp4' %}
+    <div class="mthumb viddo-1"><img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/2187/5961/products/Untitled-1_copy_a1943002-0966-4699-863d-c212273a1227_medium.jpg?v=1534944212" alt="{{image.alt}}">
+
+    </div>
+    <!--      <div class="video_wrappe">
+
+<video playsinline autoplay loop  controls id="viddd"  onload="playVid(); " >
+<source src="{{iml}}" type="video/mp4">
+
+</video>
+-->
+
+    {% else %}
+    <div class="mthumb v-11"><img class="lazyload" data-src="{{ image | product_img_url: 'master' }}" alt="{{ image.alt | escape }}">
+
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+
+  </div>
+
+</div>    
+
+<div id="product-under-variants" class="{% if product.variants.size > 1 %}loading{% endif %}">
+<div id="product-photos" class="{% if section.settings.related-products == 'right' %}desktop-5{% else %}desktop-6{% endif %}  tablet-3 mobile-hide">
+  {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+  <div id="bigimage" class="bigimage-{{ product.id }}{% if section.settings.thumbnails != 'bottom' %} desktop-10 tablet-5{% else %} desktop-12 tablet-6{% endif %}">
+    <img class="mainimage lazyload" id="{{ product.id }}" data-image-id="{{ image.id }}" data-src="{{ featured_image | img_url: '800x' }}" alt='{{ image.alt }}' title="{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"/> 
+
+    <div class="main-image-navigation">
+      <span class="prev-image"><i class="fa fa-angle-left"></i></span>
+      <span class="next-image"><i class="fa fa-angle-right"></i></span>
+    </div>  
+    <div class="image-dottt">
+      <div class="image-dot">
+        {% for image in product.images %}
+        {% if image.alt contains 'youtube' %}
+
+        {% else %}
+        <span class="datttt" id="data-nav {{ forloop.index }}" data-idd="{{ forloop.index }}">*</span>
+        {% endif %}
+        {% endfor %}
+        {% if iml contains 'mp4' %}
+        <span class="datttt dratt" id="data-nav " data-idd="0">*</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% if product.images.size > 1 %} 
+  <div id="bigimage-thumb-w" class="thumbnails{% if section.settings.thumbnails == 'bottom' %} desktop-12 tablet-6{% endif %}">
+    <a id="bigimage-thumb"  href="{{ product.images[0] | product_img_url: 'master' }}" data-image-id="" class="active thumb clicker-thumb">
+      <img class="thumbnail desktop-2 tablet-1 lazyload" src="{{ product.images[0] | product_img_url: 'master' }}" data-src="{{  product.images[0] | product_img_url: 'master' }}" alt="" data-image-id="">
+    </a>
+    {% for image in product.images limit: 4 %}
+
+    {% if image.alt contains 'youtube' %}
+
+    {% elsif image.alt contains 'mp4' %}
+    {% comment %} <a  id="3" href="//cdn.shopify.com/s/files/1/2187/5961/products/Untitled-1_copy_a1943002-0966-4699-863d-c212273a1227.jpg?v=1534944212" data-image-id="" class="thumb mppp clicker-thumb "> {% endcomment %}
+		<a id="{{ forloop.index }}"  href="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" class="thumb clicker-thumb">
+      <img class="thumbnail desktop-2 tablet-1 lazyload" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="//cdn.shopify.com/s/files/1/2187/5961/products/Untitled-1_copy_a1943002-0966-4699-863d-c212273a1227_100x.jpg?v=1534944212" alt="{{ image.alt }}" data-image-id="">
+    </a>
+    {% assign imls = image.alt %}
+    {% comment %} <h3 class="mp4--video"  style="display: none;">{{ imls }}</h3> {% endcomment %}
+
+    {% else %}
+    <a id="{{ forloop.index }}"  href="{{ image | product_img_url: 'master' }}" data-image-id="{{ image.id }}" class="{% if forloop.first %}active {% endif %}thumb clicker-thumb">
+      <img class="thumbnail desktop-2 tablet-1 lazyload" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{{ image | product_img_url: 'medium' }}" alt="{{ image.alt | escape }}" data-image-id="{{ image.id }}" />
+    </a>
+    {% endif %}
+    {% endfor %}
+
+  </div>
+  {% endif %}
+</div>
+
+
+<div id="product-right" class="{% if section.settings.related-products == 'right' %}desktop-7{% else %}desktop-6{% endif %} tablet-3 mobile-3">
+  <div id="product-description" {% if section.settings.related-products == 'right' %}class="desktop-10 tablet-6 mobile-3"{% endif %}>
+    {% if collection %} 
+    {% comment %}
+    <div class="product-navigation">
+      {% if collection.previous_product %}
+      {{ '<i class="fa fa-angle-left" aria-hidden="true"></i>' | link_to: collection.previous_product }}
+      {% endif %}
+      {% if collection.next_product %}
+      {{ '<i class="fa fa-angle-right" aria-hidden="true"></i>' | link_to: collection.next_product }}
+      {% endif %}
+    </div>
+    {% endcomment %}
+    {% endif %}
+    {% if section.settings.vendor %}<h2>{% comment %}ly_code_replace_for_[ product.vendor ]_begin{% endcomment %}{% include 'ly-vendor' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h2>{% endif %}
+    <h1 itemprop="name">{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+      <p class="product-prices">
+        {% if product.available %}
+        {% if product.compare_at_price > product.price %}
+        <span class="product-price" data-oprice="{{ product.price }}" itemprop="price">{{ product.price | money }}</span> <span class="was">{{ product.compare_at_price | money }}</span>
+
+        {% else %}
+        <span class="product-price" data-oprice="{{ product.price }}" itemprop="price">{{ product.price | money }}</span>
+        {% endif %}
+        {% else %}
+        <span class="product-price" data-oprice="{{ product.price }}" itemprop="price">{% comment %}ly_i18n_replace_for_[ 'products.product.sold_out' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.sold_out' | t }}{% endcapture %}{% include 'ly-static-string' with '9405339' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+        {% endif %}
+      </p> 
+
+      <a href="#looxReviews"><div class="loox-rating" data-id="{{ product.id }}" data-rating="{% comment %}ly_code_replace_for_[ product.metafields.loox.avg_rating ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'avg_rating' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.avg_rating  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" data-raters="{% comment %}ly_code_replace_for_[ product.metafields.loox.num_reviews ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'num_reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.num_reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}"></div></a> 
+
+      <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+      <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+      {% include 'product-form' %}
+      <ul id="popups">
+        {% if section.settings.popup-one != blank %}<li class="first"><a href="#pop-one" class="fancybox">{% comment %}ly_code_replace_for_[ pages[section.settings.popup-one].title ]_begin{% endcomment %}{% include 'ly-title' with pages[section.settings.popup-one] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>{% endif %}
+        {% if section.settings.popup-two != blank %}<li><a href="#pop-two" class="fancybox">{% comment %}ly_code_replace_for_[ pages[section.settings.popup-two].title ]_begin{% endcomment %}{% include 'ly-title' with pages[section.settings.popup-two] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>{% endif %}
+        {% if section.settings.popup-three != blank %}<li><a href="#pop-three" class="fancybox">{% comment %}ly_code_replace_for_[ pages[section.settings.popup-three].title ]_begin{% endcomment %}{% include 'ly-title' with pages[section.settings.popup-three] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></li>{% endif %}
+        {% if section.settings.popup_4 %}<li class="last"><a href="#pop-four" class="fancybox">{% comment %}ly_i18n_replace_for_[ 'products.product.popup_question' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.popup_question' | t }}{% endcapture %}{% include 'ly-static-string' with '9405340' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a></li>{% endif %}
+      </ul>
+      <div id="pop-one" class="product-page-popup" style="display: none">{% comment %}ly_code_replace_for_[ pages[section.settings.popup-one].content ]_begin{% endcomment %}{% include 'ly-content' with pages[section.settings.popup-one] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>
+      <div id="pop-two" class="product-page-popup" style="display: none">{% comment %}ly_code_replace_for_[ pages[section.settings.popup-two].content ]_begin{% endcomment %}{% include 'ly-content' with pages[section.settings.popup-two] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>
+      <div id="pop-three" class="product-page-popup" style="display: none">{% comment %}ly_code_replace_for_[ pages[section.settings.popup-three].content ]_begin{% endcomment %}{% include 'ly-content' with pages[section.settings.popup-three] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>
+      <div id="pop-four" class="product-page-popup" style="display: none">{% include 'question' %}</div>
+
+    </div>
+
+
+    <div class="desc">
+      {% include 'social' with product %}
+    </div>
+  </div> 
+  {% if section.settings.related-products == 'right' %}
+  <div id="related" class="desktop-2 tablet-hide mobile-hide">
+    {% include 'related-products' %}
+  </div>	
+  {% endif %}
+</div></div>
+<div class="clear"></div>
+<div class=" rte"> 
+  <div class="tab fix-tab">
+    <ul class="tabs">
+      <li class="aactive" data-idd="tab-1"><a href="#tab-1"><ly-as-9405334>Product Description</ly-as-9405334></a></li>
+      <li class="aactive" data-idd="tab-2"><a href="#tab-2"><ly-as-9405335>Delivery</ly-as-9405335></a></li>
+      <li class="aactive" data-idd="tab-3"><a href="#tab-3"><ly-as-9405336>Returns</ly-as-9405336></a></li>
+    </ul>
+    <div id="tab-1" class="ttav">
+      {% comment %}ly_code_replace_for_[ product.description ]_begin{% endcomment %}{% include 'ly-description' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+    </div>
+    <div id="tab-2" class="ttav"><ly-as-9405337>Once your payment is verified, we usually process and ship your order within 24 hours. This does not include weekends and holidays.<p class="delivery-approx"> Approximate delivery times:<ul><li> <b>European orders:</b> 3-7 working days </li><li> <b>International orders:</b> 1-3 weeks</li></ul>
+      </ly-as-9405337></div>
+    <div id="tab-3" class="ttav"><ly-as-9405338>If you wish to return or exchange an item, please contact us within 14 days of delivery. All items need to be in un-used condition and original packaging. Return shipping is paid by buyer.</ly-as-9405338></div>
+  </div>
+
+</div></div>
+
+</div>  
+
+{% if section.settings.related-products == 'bottom' %}
+<div id="related" class="bottom-related">
+  {% include 'related-products' %}
+</div>	
+<div class="clear"></div>
+{% endif %}
+{% comment %}
+<div id="looked-at" class="desktop-12 mobile-hide">
+  {% include 'recently-viewed' %}
+</div>
+</div>
+{% endcomment %}
+
+<script>
+  jQuery('#tab-1').addClass('open-drop');
+  jQuery('.tabs li').eq(0).addClass('active');
+  jQuery('.tabs li a').on('click', function(e) {
+    var currentAttrValue = jQuery(this).attr('href');
+    jQuery(currentAttrValue).addClass('open-drop').siblings().removeClass('open-drop');
+    jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+    e.preventDefault();
+  });
+</script>
+
+<script type="text/javascript">
+  jQuery(document).ready( function($) {
+
+    // remove the empty p tags
+    $('.tab p').each(function() {
+      var $this = $(this);
+      if($this.html().replace(/\s| /g, '').length == 0)
+        $this.remove();
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).on('ready', function() {
+    var urlParams = new URLSearchParams(window.location.search);
+
+    if(urlParams.has('upsell_added_to_cart')==true){
+      $("#AddToCart").click();
+      //  $("#product-add").show();
+    }
+    setTimeout(function(){
+      $(".tabarnapp_upsell").show();
+      $(".tabarnapp__section").slick({
+        dots: true,
+        infinite: true,
+        adaptiveHeight: true,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        responsive: [
+          {
+            breakpoint: 569, 
+            settings: {
+              arrows: false,
+              infinite: true,
+              centerPadding: '0px',
+              slidesToScroll: 2,
+              slidesToShow: 2
+            }
+          }
+        ]
+      });
+  /*    if($(window).width() > 992){
+        if($('.slick-active .notOption').length < 3){
+          $('.slick-active .notOption').css('margin-bottom', '50px');
+        }else{  
+          $('.slick-active .notOption').css('margin-bottom', '25px');
+        }        
+        $('.slick-arrow').click(function(){        
+          if($('.slick-active .notOption').length < 3){
+            $('.slick-active .notOption').css('margin-bottom', '50px');
+          }else{  
+            $('.slick-active .notOption').css('margin-bottom', '25px');
+          }
+        });
+      }else{
+        if($('.slick-active .notOption').length < 2){
+          $('.slick-active .notOption').css('margin-bottom', '50px');
+        }else{  
+          $('.slick-active .notOption').css('margin-bottom', '25px');
+        }        
+        $('.slick-arrow').click(function(){        
+          if($('.slick-active .notOption').length < 2){
+            $('.slick-active .notOption').css('margin-bottom', '50px');
+          }else{  
+            $('.slick-active .notOption').css('margin-bottom', '25px');
+          }
+        });                
+
+
+      } */
+
+      $(".js-upsell-item-price object").each(function(){
+        $(".js-upsell-item-price object").html("€"+ $(".js-upsell-item-price object").html().replace("€",""));
+      });
+      if($(".product-prices").find('.money').data('currency-roboamt'))
+      {
+        var m_price = $(".product-prices").find('.money').data('currency-roboamt')/100;
+      }
+      else
+      {
+        var m_price = $(".product-prices").data('data-oprice')/100;
+      }
+
+
+      $(".tb_price").html('Add to cart for '+m_price+'€'); 
+    }, 4000);
+
+    $('body').on('click', '.js_toggle_upsell_select', function(){
+      setTimeout(function(){
+        var m_price = $(".product-prices").find('.money').data('currency-roboamt')/100;
+        var up_price = $(".tb_price").html().replace('Add to cart for ', '').replace('€', '')*1;
+        var tl_price = (m_price+up_price).toFixed(2);
+        $(".tb_price").html('Add to cart for '+tl_price+'€');     
+      }, 300);
+    }); 
+
+  });
+
+</script>
+<script>
+  // window.onload=function(){
+	document.addEventListener("StartSlickLoading", function(event) {
+		$('.slider23').slick({
+			slidesToShow: 3,
+			slidesToScroll: 3,
+			centerPadding: '20px',
+			infinite: true,
+			prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-chevron-left"></i></button>',
+			nextArrow: '<button type="button" class="slick-next"><i class="fa fa-chevron-right"></i></button>',
+			responsive: [
+				{
+					breakpoint: 1280,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 3
+					}
+				},
+				{
+					breakpoint: 980,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 1
+					}
+				},
+				{
+					breakpoint: 767,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 2
+					}
+				}
+			]
+		});
+	});
+  var oldimg = $("#chng1").attr("src");    
+  /* shopify money function */
+  var Shopify = Shopify || {};
+  // ---------------------------------------------------------------------------
+  // Money format handler
+  // ---------------------------------------------------------------------------
+  Shopify.money_format = "${{amount}}";
+  Shopify.formatMoney = function(cents, format) {
+    if (typeof cents == 'string') { cents = cents.replace('.',''); }
+    var value = '';
+    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+    var formatString = (format || this.money_format);
+
+    function defaultOption(opt, def) {
+      return (typeof opt == 'undefined' ? def : opt);
+    }
+
+    function formatWithDelimiters(number, precision, thousands, decimal) {
+      precision = defaultOption(precision, 2);
+      thousands = defaultOption(thousands, ',');
+      decimal   = defaultOption(decimal, '.');
+
+      if (isNaN(number) || number == null) { return 0; }
+
+      number = (number/100.0).toFixed(precision);
+
+      var parts   = number.split('.'),
+          dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+          cents   = parts[1] ? (decimal + parts[1]) : '';
+
+      return dollars + cents;
+    }
+
+    switch(formatString.match(placeholderRegex)[1]) {
+      case 'amount':
+        value = formatWithDelimiters(cents, 2);
+        break;
+      case 'amount_no_decimals':
+        value = formatWithDelimiters(cents, 0);
+        break;
+      case 'amount_with_comma_separator':
+        value = formatWithDelimiters(cents, 2, '.', ',');
+        break;
+      case 'amount_no_decimals_with_comma_separator':
+        value = formatWithDelimiters(cents, 0, '.', ',');
+        break;
+    }
+
+    return formatString.replace(placeholderRegex, value);
+  };
+  /* end shopify money function */
+   setTimeout(function(){   
+  	$(".strap-checkbox").on('click', function(){
+     
+    var parents = $(this).parent();
+    //$('.product-select-upsale').attr('name','');
+    var $checkbox = $(parents).find(':checkbox');
+
+    var symbl = $("#cursym span").text().split('0');
+    if(!$checkbox.attr('checked')){
+      if( $(parents).find('select').find(':selected').text() != '--select--' ) {
+        $(parents).find('select').css('border-color', '#f2f2f2');
+        $checkbox.attr('checked', true);  
+        $(parents).addClass("strap-upsell--selected");
+        $($checkbox).data("id");
+        $(".confirmed-straps-container").append('<span class="confirmed-strap" id="pid_'+$($checkbox).val()+'"> '+$($checkbox).data("title")+'</span>');
+      }else{
+        $(parents).find('select').css('border-color', 'red');
+      }
+    }
+    else
+    {  
+      $("#chng1").attr("src",oldimg);
+      $(".slick-dots li:first-child").trigger( "click" );
+      $(".slick-dots li:first-child").find('img').attr('src', oldimg);
+      $(parents).find('select option:selected').prop("selected", false);
+      $(parents).find('select option:first').attr('selected', 'selected');
+
+      $checkbox.attr('checked', false);  
+
+      $(parents).removeClass("strap-upsell--selected");
+      $("#pid_"+$($checkbox).val()).remove();
+    }
+    var mprice2 = $("#p_prc span").text();
+    var mprice2_eur = $("#p_prc span").data('currency-eur');  
+
+    if($(".product-price").find('.money').data('currency-roboamt'))
+    {
+      var  tlp = $(".product-price").find('.money').data('currency-roboamt')*1;
+    }
+    else
+    {
+      var  tlp = $(".product-price").attr('data-oprice')*1;
+      //data-oprice="{{ product.price }}"
+    }
+    if($(".OrignalSelct").find(':selected').attr('data-nprice'))
+    {
+      var dtr = $(".OrignalSelct").find(':selected').attr('data-nprice')*1;
+    }
+    else
+    {
+      var dtr = $(".product-price").attr('data-oprice')*1;
+    }
+
+    //setTimeout(function(){    
+      $(".chkcls").each(function(){
+        if( $(this).attr('checked') )
+        {   
+          $(this).parent().parent().find('.product-select-upsale').attr('name','id[]');
+          if($(this).parent().parent().find('.product-select-upsale').find(':selected').attr('data-nprice'))
+          {
+            var ttR = $(this).parent().parent().find('.product-select-upsale').find(':selected').attr('data-nprice')*1;
+          }
+          else
+          {
+            var ttR = $(this).parent().parent().find('.product-select-upsale').attr('data-nprice')*1;
+          }
+
+          dtr = dtr+ttR;
+
+        }
+        else
+        {
+          $(this).parent().parent().find('.product-select-upsale').attr('name','');
+        }
+      });
+      $('#calTotal').html(Shopify.formatMoney(dtr));
+      $('#calTotal').attr('data-currency-roboamt',Shopify.formatMoney(dtr));
+      if( $('#AddToCart').val() != 'Unavailable'){
+				//$('.product-price').html('<span class="money">'+Shopify.formatMoney(dtr)+'</span>');
+        $("#AddToCart").html('Add to Cart for <span class="money">'+Shopify.formatMoney(dtr)+'</span>');
+      }else{ $('#AddToCart').html('Unavailable'); }
+      //  console.log(Shopify.formatMoney(dtr)+' HERE I AM THE FIRST TRIGGER!!');
+      $(".currencyRoboSelectBox").trigger('change');
+   // }, 300); 
+
+
+  });
+   }, 2000);
+
+  //};
+  
+  
+  
+
+  $(document).ready(function(){
+    var oldimg = $("#chng1").attr("src");
+    /*  $( ".product-select-upsale" ).focus(function() {
+      console.log('focus');
+      if($(this).next().find('input').prop('checked')){    
+      $(this).next().find('input').trigger('click');
+      }
+    }); */
+    $(".product-select-upsale").change(function(){
+
+      if($(this).find(':selected').text() == '--select--')
+      {
+        if($(this).next().find('input').prop('checked'))
+        {
+          $(this).next().find('input').trigger('click');
+          return false;
+        }
+      }
+
+      $(this).next().find('input').val($(this).val());
+      var Ngt = $(this).find(':selected').attr('data-nprice');
+      $(this).next().find('input').attr('data-price',Ngt);
+
+      if($(this).next().find('input').prop('checked'))
+      {
+
+        if($(".OrignalSelct").find(':selected').attr('data-nprice'))
+        {
+          var ffg = $(".OrignalSelct").find(':selected').attr('data-nprice')*1;
+        }
+        else
+        {
+          var ffg = $(".product-price").attr('data-oprice')*1;
+        }
+        // alert(ffg);
+        //    console.log(ffg+" main ");
+        setTimeout(function(){   
+          $(".chkcls").each(function(itm){
+            if( $(this).prop('checked') )
+            {    
+              $(this).parent().parent().find('.product-select-upsale').attr('name','id[]');
+              if($(this).parent().parent().find('.product-select-upsale').find(':selected').attr('data-nprice'))
+              {
+                var ttR = $(this).parent().parent().find('.product-select-upsale').find(':selected').attr('data-nprice')*1;
+              }
+              else
+              {
+                var ttR = $(this).parent().parent().find('.product-select-upsale').attr('data-nprice')*1;
+              }
+
+              ffg = ffg+ttR;
+              //      console.log($(this).data('price')*1+" if Ngt condition"+ $(this).val());
+
+            }
+            else
+            {
+              $(this).parent().parent().find('.product-select-upsale').attr('name','');
+            }
+          });
+          //   console.log(Shopify.formatMoney(ffg) + 'Total');
+          if( $('#AddToCart').val() != 'Unavailable'){
+            $('#AddToCart').html('Add to Cart for <span class="money">'+Shopify.formatMoney(ffg)+'</span>'); 
+            $(".currencyRoboSelectBox").trigger('change');
+          }else{ $('#AddToCart').html('Unavailable'); }
+        }, 1000);
+      }
+      else
+      {
+        $(this).next().find('input').trigger('click');
+      }
+
+      // $(this).parent().find(".strap-upsell__price").html(' + '+$(this).find(':selected').data('price'));
+
+
+      $(".currencyRoboSelectBox").trigger('change');
+    });
+
+
+
+    // price change on variant
+    $('.single-option-selector').change(function(){
+      if($(this).parent().parent().find(".OrignalSelct").find(':selected').attr('data-nprice'))
+      {
+        var ffg = $(this).parent().parent().find(".OrignalSelct").find(':selected').attr('data-nprice')*1;
+
+        //         console.log(ffg);
+
+        $(".product-price").html('<span class="money">'+Shopify.formatMoney(ffg)+'</span>');
+
+      }
+      else
+      {
+        var ffg = $(".product-price").attr('data-oprice')*1;
+
+      }
+      $(".chkcls").each(function(){
+        if( $(this).attr('checked') )
+        {    $(this).parent().parent().find('.product-select-upsale').attr('name','id[]');
+
+         if($(this).parent().parent().find('.product-select-upsale').find(':selected').attr('data-nprice'))
+         {
+           var ttR = $(this).parent().parent().find('.product-select-upsale').find(':selected').attr('data-nprice')*1;
+         }
+         else
+         {
+           var ttR = $(this).parent().parent().find('.product-select-upsale').attr('data-nprice')*1;
+         }
+
+         ffg = ffg+ttR;
+
+
+        }
+        else
+        {
+          $(this).parent().parent().find('.product-select-upsale').attr('name','');
+          //   console.log(ffg+" else fgt condition");
+        }
+      });
+      setTimeout(function(){   
+        if( $('#AddToCart').val() != 'Unavailable'){
+          $('#AddToCart').html('Add to Cart for <span class="money">'+Shopify.formatMoney(ffg)+'</span>');
+          $(".currencyRoboSelectBox").trigger('change');
+        }else{ $('#AddToCart').html('Unavailable'); }
+      }, 20);
+    });
+
+
+    var prodId = $('.product-page').data("product-id");
+    $('.variants-collection-view .item').click(function()
+    {
+      var ffg = $(this).attr('data-price')*1;
+      $(".product-price").html('<span class="money">'+Shopify.formatMoney(ffg)+'</span>');
+
+      var newImage = $(this).find('figure img').attr('src');
+      $('#bigimage img').attr('src',newImage);
+      $('#bigimage img').attr('data-src',newImage);
+      $('#bigimage-thumb').attr('href', newImage);
+      $('#bigimage-thumb').find('img').attr('src', newImage);
+      $('#bigimage-thumb').find('img').attr('data-src', newImage);
+      $('#mob-product-images #thumb-variant').find('img').attr('src', newImage);
+      $('#mob-product-images #thumb-variant').find('img').attr('data-src', newImage);
+
+      var variantID = $(this).attr('data-variant-id');
+      $('#product-select-' + prodId + ' option').each(function()
+      {
+        if (this.value == variantID)
+        {
+          this.selected = true;
+        }
+      })
+
+      setTimeout(function(){   
+        if( $('#AddToCart').val() != 'Unavailable'){
+          $('#AddToCart').html('Add to Cart for <span class="money">'+Shopify.formatMoney(ffg)+'</span>');
+          $(".currencyRoboSelectBox").trigger('change');
+        }else{ $('#AddToCart').html('Unavailable'); }
+      }, 20);
+      $('#product-under-variants').removeClass('loading');
+      $('#mob-product-images').removeClass('loading');
+      $('#btmm-w').removeClass('loading');
+      $('#looxReviews').removeClass('hidden');
+      $('#variants-collection-view').addClass('hidden');
+      $('#variants-collection-view-title').addClass('hidden');
+
+      $('html, body').animate({
+          scrollTop: 0
+        }, 500);
+    });
+
+    var paginationLimit = '{{ paginate_limit }}' * 1;
+    var paginationVariantsSze = '{{ product.variants.size }}' * 1;
+    var paginationAllPage = Math.round(paginationVariantsSze / paginationLimit);
+    $('#variants-pagination').find('.pages').text(paginationAllPage);
+    var pagePosition = 1;
+
+    $('.variants-collection-view .variants-item').each(function(index)
+    {
+      if (index < paginationLimit)
+      {
+        $(this).addClass('current');
+      }
+      else
+      {
+        $(this).addClass('next');
+      }
+    });
+
+
+    $('#variants-pagination .pagination-arrow--previous').click(function(e){
+      e.preventDefault();
+
+      if (pagePosition != 1)
+      {
+        $(this).find('.btn--narrow').removeClass('disabled');
+      }
+      else
+      {
+        $(this).find('.btn--narrow').addClass('disabled');
+      }
+
+      if (!$(this).find('.btn--narrow').hasClass('disabled'))
+      {
+        pagePosition--;
+
+        $($('.variants-collection-view .variants-item.current').get().reverse()).each(function(index)
+        {
+          $(this).removeClass('current');
+          $(this).addClass('next');
+        });
+        $($('.variants-collection-view .variants-item.prev').get().reverse()).each(function(index)
+        {
+          if (index < paginationLimit)
+          {
+            $(this).removeClass('prev');
+            $(this).removeClass('hidden');
+            $(this).addClass('current');
+          }
+        });
+      }
+      $('#variants-pagination').find('.current-page').text(pagePosition);
+    });
+
+    $('#variants-pagination .pagination-arrow--next').click(function(e){
+      e.preventDefault();
+
+      if (pagePosition < paginationAllPage)
+      {
+        $(this).find('.btn--narrow').removeClass('disabled');
+      }
+      else
+      {
+        $(this).find('.btn--narrow').addClass('disabled');
+      }
+      if (!$(this).find('.btn--narrow').hasClass('disabled'))
+      {
+        pagePosition++;
+
+        $('.variants-collection-view .variants-item.current').each(function(index)
+        {
+          $(this).removeClass('current');
+          $(this).addClass('prev');
+        });
+        $('.variants-collection-view .variants-item.next').each(function(index)
+        {
+          if (index < paginationLimit)
+          {
+            $(this).removeClass('next');
+            $(this).removeClass('hidden');
+            $(this).addClass('current');
+          }
+        });
+      }
+      $('#variants-pagination').find('.current-page').text(pagePosition);
+    });
+
+	setTimeout(function(){
+      var video_width = $('#mob-product-images .owl-item .mthumb').width();
+      $('#mob-product-images .owl-item .mthumb').css('height', video_width);
+    }, 2000);
+    
+//     window.onscroll = function() {
+//         var tab_top = 
+//     };
+
+  });  
+
+  $('body').on('change', '.currencyRoboSelectBox', function(){
+    $(".strapbox").each(function(){ 
+      var  itm = $(this);
+
+      if($(itm).find("select").length){
+        var cnt = 1;
+        $(this).find(".vrprice span").each(function(){    
+          var vitm = $(itm).find("select option:eq("+cnt+")");
+          if(vitm.length){
+            $(vitm).html($(vitm).html().split('-')[0] + ' - ' + $(this).html());
+          }
+
+          cnt++;
+
+        });
+      }
+
+    });
+  });
+  setTimeout(function(){   
+    $(".currencyRoboSelectBox").trigger('change');
+  }, 5000);
+
+  $('#btmm').click(function(e){
+    e.preventDefault();
+
+    $('#product-under-variants').addClass('loading');
+    $('#mob-product-images').addClass('loading');
+    $('#btmm-w').addClass('loading');
+    $('#looxReviews').addClass('hidden');
+    $('#variants-collection-view').removeClass('hidden');
+    $('#variants-collection-view-title').removeClass('hidden');
+  });
+
+$('#bigimage-thumb-w #1').removeClass('active');
+  
+</script>
+
+<style>
+  {% if section.settings.thumbnails == 'left' %}
+  #bigimage { float: right;}
+  {% endif %}
+
+  {% if section.settings.related-products == 'right' %}
+  #product-description, .product-description { 
+    border-right: 1px solid {{ settings.dotted_color }}; 
+    padding-right: 20px;
+  }
+  {% endif %}  
+  {% if section.settings.show-sku == false %}
+  .variant-sku { display: none; %}
+  {% endif %}
+  {% if section.settings.show-quantity %}
+  .add { margin-left: 20px; }
+  {% endif %}
+
+
+</style>
+{% schema %}
+{
+"name": "Product",
+"settings": [
+{
+"type": "checkbox",
+"id": "show-quantity",
+"label": "Show quantity"
+},
+{
+"type": "checkbox",
+"id": "vendor",
+"label": "Show product vendors"
+},
+{
+"type": "select",
+"id": "thumbnails",
+"label": "Thumbnail alignment",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+},
+{
+"value": "bottom",
+"label": "Bottom"
+}
+]
+},
+{
+"type": "checkbox",
+"id": "show-sku",
+"label": "Show variant SKU",
+"default": true
+},
+{
+"type": "select",
+"id": "related-products",
+"label": "Related products position",
+"options": [
+{
+"value": "none",
+"label": "Do not show"
+},
+{
+"value": "right",
+"label": "Right"
+},
+{
+"value": "bottom",
+"label": "Bottom"
+}
+]
+},
+{
+"type": "header",
+"content": "Additional content popups"
+},
+{
+"type": "page",
+"id": "popup-one",
+"label": "Popup 1 content"
+},
+{
+"type": "page",
+"id": "popup-two",
+"label": "Popup 2 content"
+},
+{
+"type": "page",
+"id": "popup-three",
+"label": "Popup 3 content"
+},
+{
+"type": "checkbox",
+"id": "popup_4",
+"label": "Popup contact form",
+"default": true
+}	
+]
+}
+{% endschema %}
+<div id="looxReviews" data-product-id="{{product.id}}" class="hidden loox-reviews-default">{% comment %}ly_code_replace_for_[ product.metafields.loox.reviews ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign ns = language | append: 'loox' %}{% assign key = 'reviews' %}{% if product.metafields[ns][key] %}{% assign ly_translation = product.metafields[ns][key] %}{% else %}{% assign ly_translation =  product.metafields.loox.reviews  %}{% endif %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>

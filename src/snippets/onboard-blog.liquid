@@ -1,0 +1,24 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}{% for i in (1..2) %}
+{% capture current %}{{ forloop.index }}{% endcapture %}
+{%- assign placeholder = 'lifestyle-' | append: current -%}
+<div class="article-index desktop-6 tablet-half mobile-3{% cycle ' first', ' last' %}" id="article-{{ article.id }}" data-alpha="{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">   
+  <div class="article-info"> 
+    <div class="article-info-inner">
+      <h3><a href="#"><ly-as-9405429>Blog post</ly-as-9405429></a></h3>
+      <p class="posted">{{ 'now' | date: "%a, %b %d, %y" }}</p>
+      {%- assign image_size = '500x' -%}
+      <div class="article-image onboard">
+        <a href="#" title="{{ article_title }}">
+          {{ placeholder | placeholder_svg_tag }}
+        </a>     
+      </div>          
+      <div class="article-content">
+        {% comment %}ly_code_replace_for_[ article.excerpt ]_begin{% endcomment %}{% include 'ly-excerpt' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+      </div>
+      <div class="readmore">
+        <a href="{{ article.url }}">{% comment %}ly_i18n_replace_for_[ 'blogs.article.read_more' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.read_more' | t }}{% endcapture %}{% include 'ly-static-string' with '9405430' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

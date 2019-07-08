@@ -1,0 +1,81 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<!--<div class="desktop-4 tablet-2 mobile-3">
+  <label for="k_id_email"><ly-as-9405412>Be first to receive latest news & special discounts</ly-as-9405412></label>
+</div>-->
+<div class="desktop-12 tablet-12 mobile-12">
+<div class="klaviyo-newsletter-form">
+<form id="email_signup" class="klaviyo_condensed_styling klaviyo_condensed_float klaviyo_condensed_embed_PWFGpk" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+  <input type="hidden" name="g" value="PWFGpk">
+  <div class="klaviyo_field_group1">
+    <input type="email" value="" name="email" id="k_id_email" placeholder="Enter email" />
+  </div>
+  
+  <div class="klaviyo_form_actions">
+    <button type="submit" class="klaviyo_submit_button"><i class="fa fa-angle-right"></i></button>
+  </div>
+  <div style="clear:both"></div>
+<div class="klaviyo_messages">
+    <div class="success_message" style="display:none;"></div>
+    <div class="error_message" style="display:none;"></div>
+    </div>
+  </form>
+</div>
+  </div>
+<!-- <div  class="desktop-3 tablet-1 mobile-3">
+<ul id="social-icons">
+  {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>{% endif %}
+  {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>{% endif %}
+  {% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x"></i></a></li>{% endif %}
+  {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x"></i></a></li>{% endif %}
+  {% if settings.youtube_url != blank %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="fa fa-youtube fa-2x"></i></a></li>{% endif %}
+  {% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus fa-2x"></i></a></li>{% endif %}
+  {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x"></i></a></li>{% endif %}
+</ul>
+</div> -->
+<style type="text/css">
+  form#email_signup {width: 100% !important;}
+  .klaviyo-main ul#social-icons {text-align: center;}
+  .klaviyo_condensed_float .klaviyo_field_group, .klaviyo_condensed_float .klaviyo_form_actions, .klaviyo_condensed_float .klaviyo_messages {float: right;}
+button.klaviyo_submit_button {border-radius: 0px !important;height: 45px !important;padding-top: 10px !important;/* display: inline-block; */ width: 100px;font-weight: normal !important;font-size: 13px !important;vertical-align: middle;}
+  .klaviyo_condensed_styling, .klaviyo_styling {max-width: inherit;}
+  .klaviyo_field_group1 {width: 88%;}
+  .klaviyo_field_group1 label {font-size: 13px;font-weight: normal;width:70%;text-align:center;padding-top: 10px;}
+  .klaviyo_condensed_styling .klaviyo_field_group>label {display:block;}
+.klaviyo_styling.klaviyo_condensed_embed_PWFGpk,
+.klaviyo_condensed_styling.klaviyo_condensed_embed_PWFGpk {
+  font-family: "Helvetica Neue", Arial;
+}.klaviyo_styling.klaviyo_condensed_embed_PWFGpk label,
+.klaviyo_condensed_styling.klaviyo_condensed_embed_PWFGpk label {
+  color:#222;
+}.klaviyo_styling.klaviyo_condensed_embed_PWFGpk input[type=text],
+.klaviyo_styling.klaviyo_condensed_embed_PWFGpk input[type=email],
+.klaviyo_condensed_styling.klaviyo_condensed_embed_PWFGpk input[type=text],
+.klaviyo_condensed_styling.klaviyo_condensed_embed_PWFGpk input[type=email] {
+  border-radius: 0px; border: 1px solid #202020; height: 45px;width:50%;
+}.klaviyo_styling.klaviyo_condensed_embed_PWFGpk .klaviyo_submit_button,
+.klaviyo_condensed_styling.klaviyo_condensed_embed_PWFGpk .klaviyo_submit_button {
+  background-color:#202020;
+  border-radius: 2px;
+}.klaviyo_styling.klaviyo_condensed_embed_PWFGpk .klaviyo_submit_button:hover,
+.klaviyo_condensed_styling.klaviyo_condensed_embed_PWFGpk .klaviyo_submit_button:hover {
+  background-color:#F07671;
+}
+</style>
+{% comment %} <script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js"></script>
+<script type="text/javascript">
+  KlaviyoSubscribe.attachToForms('#email_signup', {
+    hide_form_on_success: false
+  });
+</script> {% endcomment %}
+
+<script>
+document.addEventListener("StartOtherLoading", function(event)
+{
+	loadJS('//www.klaviyo.com/media/js/public/klaviyo_subscribe.js', function()
+	{
+		KlaviyoSubscribe.attachToForms('#email_signup', {
+			hide_form_on_success: false
+		});		
+	});
+});
+</script>

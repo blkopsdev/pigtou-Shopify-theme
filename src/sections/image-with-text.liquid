@@ -1,0 +1,131 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div class="homepage-section no-fouc index-section{% if section.settings.no-bottom-margin %} nbm{% endif %}" data-section-id="{{ section.id }}">
+{% if section.settings.full_width %}<div class="gridlock-fluid"><div class="row">{% endif %}
+    {% capture image_layout %}
+    <div class="desktop-6 tablet-3 mobile-3 text-with-image">
+      {% if section.settings.image != blank %}
+        {% if section.settings.full_width %}
+        {{ section.settings.image | img_url: '1400x' | img_tag: section.settings.image.alt }}
+        {% else %}
+        {{ section.settings.image | img_url: '800x' | img_tag: section.settings.image.alt }}
+        {% endif %}
+      {% else %}
+      <div class="onboard">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+    </div>
+    {% endcapture %}
+
+    <div class="row images-with-text">
+      {% unless section.settings.full_width %}<div class="desktop-12 tablet-6 image-with-text-wrapper">{% endunless %}
+      {% if section.settings.layout == 'left' %}
+      {{ image_layout }}
+      {% endif %}
+
+      <div class="desktop-6 tablet-3 mobile-3 text-with-image text_section{% if section.settings.text-align == 'center' %} text-centered{% endif %}">
+        {% if section.settings.title != blank %}
+        <h3>{{ section.settings.title | escape }}</h3>
+        {% endif %}
+        {% if section.settings.text != blank %}
+        <div class="rte">{{ section.settings.text }}</div>
+        {% endif %}
+        {% if section.settings.button != blank and section.settings.link != blank %}
+        <a href="{{ section.settings.link }}" class="button">
+          {{ section.settings.button | escape }}
+        </a>
+        {% endif %}
+      </div>
+
+      {% if section.settings.layout == 'right' %}
+      {{ image_layout }}
+      {% endif %}
+    {% unless section.settings.full_width %}</div>{% endunless %}
+  </div>
+  {% if section.settings.full_width %}</div></div>{% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Image with text",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Enable full browser width",
+        "default": false
+	  },
+      {
+        "type": "checkbox",
+        "id": "no-bottom-margin",
+        "label": "Remove bottom margin",
+        "default": false
+	  },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Image on left"
+          },
+          {
+            "value": "right",
+            "label": "Image on right"
+          }
+        ]
+      },
+     {
+        "type": "select",
+        "id": "text-align",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Button link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image with text",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

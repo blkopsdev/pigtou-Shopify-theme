@@ -1,0 +1,145 @@
+<!-- JS
+================================================== -->
+
+<script src="{{ 'theme.js' | asset_url }}"></script>
+<script src="{{ 'option_selection.js' | shopify_asset_url }}"></script>
+<script src="{{ 'jquery.fs.shifter.js' | asset_url }}"></script>
+
+{% if template contains 'index' %}
+	<script src="{{ 'instafeed.js' | asset_url }}"></script>
+{% endif %}
+
+{% if template contains 'customers' %}
+{{ "shopify_common.js" | shopify_asset_url | script_tag }}
+{{ "customer_area.js"  | shopify_asset_url | script_tag }}
+{% endif %}
+
+{{ shop.metafields.loox["global_html_head"] }} 
+
+{% include "trackify" %}
+
+<!-- Snapchat CustomerEmail data layer -->  
+<script type="text/javascript">
+	{% if customer %}
+		window.dataLayer.push({
+		VisitorType: "Logged In",
+		CustomerId: "{{ customer.id }}",
+		CustomerEmail: "{{ customer.email }}",
+		});
+	{% else %}
+		window.dataLayer.push({
+			VisitorType: "Guest"
+		});
+	{% endif %}
+</script>
+<!-- END Snapchat CustomerEmail data layer -->
+
+{% include 'timber-cart' %}
+
+{% include 'popup' %}
+
+<!-- Begin Recently Viewed Products -->
+<script type="text/javascript" charset="utf-8">
+	//<![CDATA[
+	// Including api.jquery.js conditionnally.
+	if (typeof Shopify.resizeImage === 'undefined') {
+		document.write({{ "api.jquery.js" | shopify_asset_url | script_tag | json }});
+	}
+	//]]>
+</script>
+
+<script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<script src="{{ 'jquery.products.min.js' | asset_url }}"></script>
+
+{% if template contains 'product' %}
+	<script type="text/javascript" charset="utf-8">
+		//<![CDATA[
+		Shopify.Products.recordRecentlyViewed();
+		//]]>
+		$('input, textarea').placeholder();
+	</script>
+{% endif %}
+
+{% if settings.ajax_cart_method == 'drawer' %}  
+	<script>
+		jQuery(function($) {
+			ajaxCart.init({
+				formSelector: '#AddToCartForm',
+				cartContainer: '#CartContainer',
+				addToCartSelector: '#AddToCart',
+				cartCountSelector: '.CartCount',
+				cartCostSelector: '.CartCost',
+				moneyFormat: {{ shop.money_format | json }},
+				onToggleCallback: function(cart) {
+
+				}
+			});
+			
+			$("body").on("click", "#cst-button", function(){
+				$(".drawer__close").trigger('click');         
+			}); 
+			$(".shifter-open").on("click", ".mobile-menu-close", function(){
+			}); 
+			
+			
+		});
+		
+		jQuery('body').on('ajaxCart.afterCartLoad', function(evt, cart) {
+
+		});
+
+		$('body').on('click', '.template--link',  function(){      
+			var xvf = $(this).attr('data-colink');
+			$('.vendor-ul').hide();
+			$('.subbb.'+xvf).show();
+			setTimeout(function(){ 
+				$('.slick-list').css('height', $('.slick-active').height()+50+'px');  
+				if($('.slide-1').hasClass('slick-active')){
+					$('#btmm').attr('href', '{{shop.url}}');
+				} else {
+					$('#btmm').attr('href', 'javascript:void(0);');
+				} 
+			}, 500);
+			
+			var pageuri = $(this).attr('data-page');
+			$('.btn1').attr('href', pageuri);
+			$('#btmm').attr('href', pageuri);
+			setTimeout(function(){
+				$("html, body").animate({ scrollTop: 0 }, "fast");        
+			}, 500);
+		});
+			
+		$('body').on('click', '#btmm', function(){
+			if($(this).attr('href') == '{{shop.url}}'){
+				window.location.href="{{shop.url}}";  
+			}        
+			setTimeout(function(){ 
+				$('.slick-list').css('height', $('.slick-active').height()+50+'px');  
+				if($('.slide-1').hasClass('slick-active')){
+				$('#btmm').attr('href', '{{shop.url}}');                        
+				}else{
+					$('#btmm').attr('href', 'javascript:void(0);');
+				}        
+			}, 500);
+		});
+
+		$('body').on('click', '.aactive', function(){
+			$('.ttav').removeClass('open-drop');
+			var xfv = $(this).attr('data-idd');
+
+			$('.ttav#'+ xfv).addClass('open-drop');
+			$('.aactive').removeClass('active');
+			$(this).addClass('active');
+		});    
+	</script>
+
+	<script src="{{ 'handlebars.min.js' | asset_url }}"></script>
+	{% include 'ajax-cart-template' %}
+	<script src="{{ 'ajax-cart.js' | asset_url }}"></script>
+
+{% endif %}
+
+{{ shop.metafields.loox["global_html_body"] }}
+
+<script src="//cdn.codeblackbelt.com/js/modules/frequently-bought-together/main.min.js?shop=pigtou.myshopify.com"></script>
+{% include 'ly-languages' %}

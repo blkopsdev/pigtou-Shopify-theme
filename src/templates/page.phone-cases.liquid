@@ -1,0 +1,63 @@
+{% comment %}ly_global_begin{% endcomment %}
+{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<div id="page" class="desktop-12 tablet-6 mobile-3 cases" data-section-id="{{ section.id }}">
+  <h1 class="text-center">{% comment %}ly_code_replace_for_[ page.title ]_begin{% endcomment %}
+    {% include 'ly-title' with page %}{{ ly_translation }}
+    {% comment %}ly_code_replace_end{% endcomment %}</h1>
+  <div class="subline"> <ly-as-10142792>Select your device</ly-as-10142792> </div>
+  {% comment %}ly_code_replace_for_[ page.content ]_begin{% endcomment %}
+  {% include 'ly-content' with page %}{{ ly_translation }}
+  {% comment %}ly_code_replace_end{% endcomment %}
+  
+  
+{% comment %}Get page handle{% endcomment %}
+
+  
+</div>
+<div class="twmplate--width lap-pho-case">
+
+  {% for link in linklists['hard'].links %} 
+  
+  {% assign sub_collection = link.object %}
+ 
+
+  <div  class="product-index desktop-3 tablet-2" data-alpha="BLACK MARBLE Iphone/ Ipod vinyl skin" data-price="1490">
+     
+    <div  class="device" class="prod-container"> 
+   		 <div class="prod-image">
+           <a href="{{ sub_collection.url }}" title=" {{ sub_collection.title }}">
+              <div class="reveal">
+                {% comment %}sub_collection.image{% endcomment %}
+                {% if sub_collection.image != blank  %}
+									{%- assign load_img_src = sub_collection.image | img_url: '10x', format: 'pjpg' -%}
+									{% comment %} {%- assign load_img_src = sub_collection.image | img_url: 'large' -%} {% endcomment %}
+									{%- assign load_img_class = '' -%}
+									<img
+									{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+									alt="<ly-as-10142793>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142793>" 
+									/>								
+                 {% comment %} <img src="{{ sub_collection.image | img_url: 'large' }}" alt="<ly-as-10142793>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142793>"> {% endcomment %}
+           		{% else %}
+								{%- assign load_img_src = link.object.products.first.featured_image | img_url: '10x', format: 'pjpg' -%}
+								{% comment %} {%- assign load_img_src = link.object.products.first.featured_image | img_url: 'large' -%} {% endcomment %}
+								{%- assign load_img_class = '' -%}
+								<img
+								{% include '__opt_load_img' src:load_img_src class:load_img_class %}
+								alt="<ly-as-10142793>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142793>" 
+								/>							 
+               {% comment %} <img src="{{ link.object.products.first.featured_image | img_url: 'large' }}" alt="<ly-as-10142793>BLACK MARBLE Iphone/ Ipod vinyl skin</ly-as-10142793>"> {% endcomment %}
+           {% endif %}
+             </div>
+          </a>
+    	</div>
+ 	</div>
+  <div class="product-info"> 
+    <a href="{{ sub_collection.url }}" title=" {{ sub_collection.title }}">
+      
+      <h2> {{ sub_collection.title }}</h2>
+   </a>
+   </div> 
+ </div>
+
+  {% endfor %}
+</div>

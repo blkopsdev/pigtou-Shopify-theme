@@ -1,0 +1,26 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<label class="desktop-4 tablet-2 mobile-3"><ly-as-9405415>Be first to receive latest news & special discounts</ly-as-9405415>{% comment %}{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.newsletter_title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.newsletter_title' | t }}{% endcapture %}{% include 'ly-static-string' with '9405416' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}{% endcomment %}</label>
+
+<div id="signup" class="desktop-4 tablet-2 mobile-3">
+  {% form 'customer' %}
+  
+  {% if form.posted_successfully? %}
+  <p class="success">{% comment %}ly_i18n_replace_for_[ 'password.general.thanks' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'password.general.thanks' | t }}{% endcapture %}{% include 'ly-static-string' with '9405417' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+  {% else %}
+  <input type="hidden" name="contact[tags]" value="prospect, password page">
+  <input type="email" name="contact[email]" id="mce-EMAIL" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.newsletter_email' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.newsletter_email' | t }}{% endcapture %}{% include 'ly-static-string' with '9405418' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">
+  <input type="submit" id="mc-embedded-subscribe" value="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.submit' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.submit' | t }}{% endcapture %}{% include 'ly-static-string' with '9405419' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">
+  {% endif %}
+   {{ form.errors | default_errors }}
+  {% endform %}  
+ 
+</div>
+
+<ul id="social-icons" class="desktop-4 tablet-2 mobile-3">
+  {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>{% endif %}
+  {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>{% endif %}
+  {% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x"></i></a></li>{% endif %}
+  {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x"></i></a></li>{% endif %}
+  {% if settings.youtube_url != blank %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="fa fa-youtube fa-2x"></i></a></li>{% endif %}
+  {% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus fa-2x"></i></a></li>{% endif %}
+  {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x"></i></a></li>{% endif %}
+</ul>
