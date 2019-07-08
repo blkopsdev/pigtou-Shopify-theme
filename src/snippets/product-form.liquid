@@ -2,29 +2,48 @@
 <span class="variant-sku">{{ product.variants.first.sku }}</span>
 <form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="product_form{% if product.variants.size > 1 or product.options.size > 1 %} with_variants{% endif %}" id="AddToCartForm" data-product="{{ product | json | escape }}">
 
-      {% for product_option in product.options_with_values %}
-        {% if product_option.name == "Design" %}
-          {% assign variant_position = product_option.position | minus: 1 %}
-        {% endif %}
-       
-      {% endfor %}
-    
-  <style>
-    label[for="product-select-{{product.id}}-option-{{variant_position}}"], #product-select-{{product.id}}-option-{{variant_position}} {
-      display: none !important;
-    }
-  </style>
-  {% if product.options.size > 1 %}
+  {% for product_option in product.options_with_values %}
+    {% if product_option.name == "Design" %}
+      {% assign variant_position = product_option.position | minus: 1 %}
+      <style>
+        label[for="product-select-{{product.id}}-option-{{variant_position}}"], #product-select-{{product.id}}-option-{{variant_position}} {
+          display: none !important;
+        }
+      </style>
+    {% endif %}
+  {% endfor %}
+  
   <div class="select">
+  {% if product.id == 3879859355709 %}
+    <div class="selector-wrapper">
+      <label for="product-select-option-extra">Device One</label>
+      <select class="single-option-selector" data-option="extra_option" id="product-select-option-extra">
+        <option value="Case1">Case One</option>
+        <option value="Case2">Case Two</option>
+        <option value="Case3">Case Three</option>
+        <option value="Case4">Case Four</option>
+        <option value="Case5">Case Five</option>
+      </select>
+    </div>
+  {% endif %}
+  
+  {% if product.id == 3926122889277 %}
+    <div class="selector-wrapper">
+      <label for="product-select-option-extra">Device Two</label>
+      <select class="single-option-selector" data-option="extra_option" id="product-select-option-extra">
+        <option value="Case">Case</option>
+      </select>
+    </div>
+  {% endif %}
+  {% if product.options.size > 1 %}
     <select class="OrignalSelct" id="product-select-{{ product.id }}" name='id[]'>
       {% for variant in product.variants %}
       
       {% if variant.available %} <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" data-nprice="{{variant.price}}" data-price="{{ variant.price | money }}" value="{{ variant.id }}">{% comment %}ly_code_replace_for_[ variant.title ]_begin{% endcomment %}{% include 'ly-title' with variant %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} - {{ variant.price | money }}</option>{% endif %}
       {% endfor %}
     </select>
-  </div>
   {% elsif product.options.size == 1 and product.variants.size > 1 %}
-  <div class="select">
+    {% unless product.options[0] == 'Design' %}
     <label>{{ product.options[0] }}</label>
     <select class="OrignalSelct" id="product-select-{{ product.id }}" name='id[]'>
       {% for variant in product.variants %}
@@ -34,8 +53,9 @@
       {% endif %}
       {% endfor %}
     </select>
-  </div>
+    {% endunless %}
   {% else %}
+  </div>
   <div class="what-is-it">
     {% if product.options.first != 'Title' %}
     <label>{{ product.options.first }}:</label>{% for variant in product.variants %}{% if variant.available %}<span class="it-is">{% comment %}ly_code_replace_for_[ variant.option1 | escape ]_begin{% endcomment %}{% include 'ly-option1' with variant %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}</span>{% endif %}{% endfor %}
