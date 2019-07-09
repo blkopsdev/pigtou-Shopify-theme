@@ -5,6 +5,9 @@
 {% comment %} <script src="//cdn.shopify.com/s/files/1/1371/9405/t/7/assets/jquery.elevatezoom.js?2777040019198797224" type="text/javascript"></script> {% endcomment %}
 {% if product.variants.size > 1 %}
   <h1 id="variants-collection-view-title" class="text-center" itemprop="name">{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+  <p id="btmm-w" class="loading" style="margin-bottom:20px;">
+    <a id="btmm" class="btn1 vink-b slick-arrow slick-disabled" href="#" aria-disabled="true" style="display: inline; ">« back</a>
+  </p>
 {% endif %}
 
 {% include 'breadcrumb' %}
@@ -79,11 +82,6 @@
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
-{% if product.variants.size > 1 %}
-<p id="btmm-w" class="loading">
-  <a id="btmm" class="btn1 vink-b slick-arrow slick-disabled" href="#" aria-disabled="true" style="display: inline;">« back</a>
-</p>
-{% endif %}
   <div id="mob-product-images" class="{% if product.variants.size > 1 %}loading {% endif %}owl-carousel desktop-hide tablet-3 mobile-3 mobile-3">
     <div id="thumb-variant">
       <img src="" alt="">

@@ -15,23 +15,27 @@
   
   <div class="select">
   {% if product.id == 3879859355709 %}
-    <div class="selector-wrapper">
-      <label for="product-select-option-extra">Device One</label>
-      <select class="single-option-selector" data-option="extra_option" id="product-select-option-extra">
-        <option value="Case1">Case One</option>
-        <option value="Case2">Case Two</option>
-        <option value="Case3">Case Three</option>
-        <option value="Case4">Case Four</option>
-        <option value="Case5">Case Five</option>
+    <div class="selector-wrapper line-item-property__field">
+      <label for="device">Device</label>
+      <select required class="required" id="device" name="properties[Device]">
+        <option value="Case One">Case One</option>
+        <option value="Case Two">Case Two</option>
+        <option value="Case Three">Case Three</option>
+        <option value="Case Four">Case Four</option>
+        <option value="Case Five">Case Five</option>
       </select>
     </div>
   {% endif %}
   
   {% if product.id == 3926122889277 %}
-    <div class="selector-wrapper">
-      <label for="product-select-option-extra">Device Two</label>
-      <select class="single-option-selector" data-option="extra_option" id="product-select-option-extra">
-        <option value="Case">Case</option>
+    <div class="selector-wrapper line-item-property__field">
+      <label for="device">Device</label>
+      <select required class="required" id="device" name="properties[Device]">
+        <option value="Case One">Case One</option>
+        <option value="Case Two">Case Two</option>
+        <option value="Case Three">Case Three</option>
+        <option value="Case Four">Case Four</option>
+        <option value="Case Five">Case Five</option>
       </select>
     </div>
   {% endif %}
@@ -43,8 +47,8 @@
       {% endfor %}
     </select>
   {% elsif product.options.size == 1 and product.variants.size > 1 %}
-    {% unless product.options[0] == 'Design' %}
-    <label>{{ product.options[0] }}</label>
+    
+    <label {% if product.options[0] == "Design" %}style="display: none"{% endif %}>{{ product.options[0] }}</label>
     <select class="OrignalSelct" id="product-select-{{ product.id }}" name='id[]'>
       {% for variant in product.variants %}
       
@@ -53,7 +57,7 @@
       {% endif %}
       {% endfor %}
     </select>
-    {% endunless %}
+    
   {% else %}
   </div>
   <div class="what-is-it">
